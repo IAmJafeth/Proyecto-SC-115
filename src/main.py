@@ -171,7 +171,7 @@ while True:
                 # Si el usuario elige una opción incorrecta
                 print("\n-- OPCIÓN INCORECTA: Inténtelo denuevo -- ")
 
-    elif menu_option == "2":  # ! Módulo de Citas y Cancelación de Citas -----------------------------------------------------------
+    elif menu_option == "2":  # ! Módulo de Citas y Cancelación de Citas ----------------------------------------------------------
         print("\n -- OPCIÓN AÚN EN DESARROLLO --")
 
     elif menu_option == "3":  # ! Módulo de Pagos ----------------------------------------------------------------------------------
