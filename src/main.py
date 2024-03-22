@@ -14,7 +14,7 @@ Estudiantes:    Jafeth Garro Roldán
 # * FUNCIONES----------------------------------------------------------------------------------------------------------------------------
 
 
-def crearMedico() -> None:
+def crearMedico():
     """
     Función que permite al usuario ingresar la información de un médico y agregarlo a la lista de médicos.
 
@@ -42,7 +42,7 @@ def crearMedico() -> None:
     medicos.append(medico)
 
 
-def crearPaciente() -> None:
+def crearPaciente():
     """
     Función que crea un nuevo paciente y lo agrega a la lista de pacientes.
 
@@ -62,7 +62,7 @@ def crearPaciente() -> None:
     pacientes.append(paciente)
 
 
-def mostrarMedicos() -> None:
+def mostrarMedicos():
     """
     Muestra la información de los médicos registrados.
 
@@ -84,7 +84,7 @@ def mostrarMedicos() -> None:
         print("\n")
 
 
-def mostrarPacientes() -> None:
+def mostrarPacientes():
     """
     Muestra la información de los pacientes registrados.
 
