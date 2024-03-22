@@ -32,6 +32,9 @@ def crearMedico():
     medico.append(input("\tNúmero telefónico del médico: "))
     medico.append(
         input("\tDías de trabajo del médico en el siguiente formato día/día/+...: "))
+
+    # TODO Cambiar la seleccion de horario para que el usuario tenga que escogerla desde un menú en logar de digitarlo
+    # ! Owner: Jafeth Garro
     while True:
         horario = input(
             "\tIngrese \"m\" si el médico trabaja en la mañana o \"t\" si el médico trabaja en la tarde: ").strip().lower()
@@ -39,6 +42,7 @@ def crearMedico():
             break
         print("\n-- OPCIÓN INCORECTA: Inténtelo denuevo -- ")
     medico.append(horario)
+
     medicos.append(medico)
 
 
@@ -58,6 +62,9 @@ def crearPaciente():
     paciente.append(input("\tCorreo electrónico del paciente: "))
     paciente.append(input("\tDirección del paciente: "))
     paciente.append(input("\tNúmero telefónico del paciente: "))
+
+    # TODO: Desplegar un menú con los medicos asignados, para que el usuario seleccione el medico desde el menú en lugar de digitarlo
+    # ! Owner: Jafeth Garro
     paciente.append(input("\tNombre del médico asignado: "))
     pacientes.append(paciente)
 
@@ -103,6 +110,46 @@ def mostrarPacientes():
         print(f"\tTeléfono: {paciente[3]}")
         print(f"\tMédico tratante: {paciente[4]}")
         print("\n")
+
+
+def registrarCita():
+    # TODO: Avance 2 Módulo de Citas y Cancelación de Citas - Registro de cita:
+    # ! Owner: Jafeth Garro
+    """
+    solicitar el día de la cita en cual se debe validar la disponibilidad de los horarios, médicos 
+    según la especialidad y tratamiento del paciente para agendar dicha cita. 
+    """
+
+
+def cancelarCita():
+    # TODO: Módulo de Citas y Cancelación de Citas - Cancelación y/o reprogramación de cita
+    # ! Owner: Aldo Mora
+    """
+    en caso de aplicar para una cancelación de cita programada 
+    debe solicitar el día que tenía la cita agendada, y debe dar opción a que le permita reprogramar dicha cita 
+    a nuevo horario disponible según el tratamiento y medico a aplicar.
+    """
+
+
+def procesarPagos():
+    # TODO: Avance 2 Módulo de Pagos - Formas  de  Pago
+    # ! Owner: Daniel Vindas
+    """
+    Se  debe  registrar  la  forma  de  pago  según  los  tratamientos  solicitados,  aquí  se 
+    manejarían las formas de pago en efectivo, transferencia sinpe, tarjeta de crédito o débito; adicional de un 
+    grupo de descuentos según el tratamiento que usted con su equipo defina como parte de su programa.
+    """
+
+
+def generarFactura():
+    # TODO: Avance 2 Módulo de Pagos - Facturación
+    # ! Owner: Elena Gomez
+    """
+    Se realiza la gestión de la factura, donde debe tomar en consideración la generación de un 
+    documento que simule una factura al paciente. Tome en consideración que debe llevar el siguiente detalle: 
+    Clínica  de  atención,  Especialidad,  Moneda,  Nombre  del  Paciente,  Servicio,  Cantidad,  Precio,  Detalle, 
+    Subtotal, Descuento, IVA, Total General.
+    """
 
 
 # * VARIABLES --------------------------------------------------------------------------------------------------------------------------------
@@ -173,9 +220,13 @@ while True:
 
     elif menu_option == "2":  # ! Módulo de Citas y Cancelación de Citas ----------------------------------------------------------
         print("\n -- OPCIÓN AÚN EN DESARROLLO --")
+        # TODO: Agregar funcionalidad de Módulo de Citas y Cancelación de Citas
+        # !: Owners: Jafeth Garro y Aldo Mora
 
     elif menu_option == "3":  # ! Módulo de Pagos ----------------------------------------------------------------------------------
         print("\n -- OPCIÓN AÚN EN DESARROLLO --")
+        # TODO: Agregar funcionalidad de Módulo de Citas y Cancelación de Citas
+        # !: Owners: Daniel Vindas y Elena Gomez
 
     elif menu_option == "4":  # ! Módulo de Reportes -------------------------------------------------------------------------------
         print("\n -- OPCIÓN AÚN EN DESARROLLO --")
