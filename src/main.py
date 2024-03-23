@@ -11,7 +11,103 @@ Estudiantes:    Jafeth Garro Roldán
                 Daniel Vindas Morraz
 
 """
-# * FUNCIONES---------------------------------------------------------------------------------------------------------------------------
+
+# * FUNCIONES MEDICOS---------------------------------------------------------------------------------------------------------------------------
+
+
+def getNombreDiaTrabajo(index):
+    """
+    Retorna el nombre del día de la semana correspondiente al índice dado.
+
+    Parámetros:
+    - index (int): El índice del día de la semana (0 para Lunes, 1 para Martes, etc.)
+
+    Retorna:
+    - str: El nombre del día de la semana correspondiente al índice dado.
+    """
+    if index == 0:
+        return "Lunes"
+    if index == 1:
+        return "Martes"
+    if index == 2:
+        return "Miércoles"
+    if index == 3:
+        return "Jueves"
+    if index == 4:
+        return "Viernes"
+    if index == 5:
+        return "Sábado"
+    if index == 6:
+        return "Domingo"
+
+
+def crearSemanaDeTrabajo():
+    """
+    Crea una lista que representa los días de trabajo de un médico.
+
+    Returns:
+    - dias (list): Lista que representa los días de trabajo del médico. Cada elemento de la lista indica si el médico trabaja o no en ese día.
+    """
+    dias = ["No Trabaja"] * 7
+
+    while True:
+        print("\n\t\tSeleccione los días de trabajo del médico")
+        print(f"\t1- Lunes ({dias[0]})")
+        print(f"\t2- Martes ({dias[1]})")
+        print(f"\t3- Miércoles ({dias[2]})")
+        print(f"\t4- Jueves ({dias[3]})")
+        print(f"\t5- Viernes ({dias[4]})")
+        print(f"\t6- Sábado ({dias[5]})")
+        print(f"\t7- Domingo ({dias[6]})")
+        print("\t8- Finalizar selección")
+
+        dia = int(input("\nSeleccione un día: "))
+        if dia == 8:
+            break
+        dias[dia - 1] = "Trabaja"
+
+    return dias
+
+
+def formatSemanaDeTrabajo(dias):
+    """
+    Formatea los días de trabajo de la semana.
+
+    Args:
+        dias (list): Una lista de strings que representa los días de la semana.
+
+    Returns:
+        str: Una cadena formateada con los días de trabajo separados por coma.
+    """
+    semana = ""
+    for i in range(len(dias)):
+        if dias[i] == "Trabaja":
+            semana += getNombreDiaTrabajo(i) + ", "
+    return semana
+
+
+def mostrarMedico(medico):
+    """
+    Muestra la información de un médico en la consola.
+
+    Parámetros:
+    - medico: una lista que contiene la información del médico en el siguiente orden:
+        - Nombre del médico (str)
+        - Especialidad del médico (str)
+        - Correo del médico (str)
+        - Teléfono del médico (str)
+        - Días de trabajo del médico (list)
+        - Horario del médico ('m' para mañana, 't' para tarde)
+
+    Retorna:
+    None
+    """
+    print(f"Nombre: {medico[0]}")
+    print(f"Especialidad: {medico[1]}")
+    print(f"Correo: {medico[2]}")
+    print(f"Teléfono: {medico[3]}")
+    print(f"Días de trabajo: {formatSemanaDeTrabajo(medico[4])}")
+    print(f"Horario: {'Mañana' if medico[5] == 'm' else 'Tarde'}\n")
 
 
 def crearMedico():
@@ -25,16 +121,13 @@ def crearMedico():
     - No retorna ningún valor.
     """
     medico = []
-    print("\n\t\tEstimado(a) usuario ingrese la siguiente información\n")
-    medico.append(input("\tNombre completo del médico: "))
-    medico.append(input("\tEspecialidad del médico: "))
-    medico.append(input("\tCorreo electrónico del médico: "))
-    medico.append(input("\tNúmero telefónico del médico: "))
-    medico.append(
-        input("\tDías de trabajo del médico en el siguiente formato día/día/+...: "))
+    print("\n\tEstimado(a) usuario ingrese la siguiente información\n")
+    medico.append(input("Nombre completo del médico: "))
+    medico.append(input("Especialidad del médico: "))
+    medico.append(input("Correo electrónico del médico: "))
+    medico.append(input("Número telefónico del médico: "))
+    medico.append(crearSemanaDeTrabajo())
 
-    # TODO Cambiar la seleccion de horario para que el usuario tenga que escogerla desde un menú en logar de digitarlo
-    # ! Owner: Jafeth Garro
     while True:
         horario = input(
             "\tIngrese \"m\" si el médico trabaja en la mañana o \"t\" si el médico trabaja en la tarde: ").strip().lower()
@@ -42,34 +135,14 @@ def crearMedico():
             break
         print("\n-- OPCIÓN INCORECTA: Inténtelo denuevo -- ")
     medico.append(horario)
-
     medicos.append(medico)
 
-
-def crearPaciente():
-    """
-    Función que crea un nuevo paciente y lo agrega a la lista de pacientes.
-
-    Parámetros:
-    - Ninguno
-
-    Retorna:
-    - None
-    """
-    paciente = []
-    print("\n\t\tEstimado(a) usuario ingrese la siguiente información\n")
-    paciente.append(input("\tNombre del paciente: "))
-    paciente.append(input("\tCorreo electrónico del paciente: "))
-    paciente.append(input("\tDirección del paciente: "))
-    paciente.append(input("\tNúmero telefónico del paciente: "))
-
-    # TODO: Desplegar un menú con los medicos asignados, para que el usuario seleccione el medico desde el menú en lugar de digitarlo
-    # ! Owner: Jafeth Garro
-    paciente.append(input("\tNombre del médico asignado: "))
-    pacientes.append(paciente)
+    print("\n\tMédico agregado exitosamente\n")
+    mostrarMedico(medico)
+    input("\nPresione enter para continuar...")
 
 
-def mostrarMedicos():
+def mostrarTodosMedicos():
     """
     Muestra la información de los médicos registrados.
 
@@ -80,18 +153,58 @@ def mostrarMedicos():
         print("\n\tNo hay médicos registrados\n")
         return
 
-    print("\n\t\tMédicos registrados\n")
+    print("\n\tMédicos registrados\n")
     for medico in medicos:
-        print(f"\tNombre: {medico[0]}")
-        print(f"\tEspecialidad: {medico[1]}")
-        print(f"\tCorreo: {medico[2]}")
-        print(f"\tTeléfono: {medico[3]}")
-        print(f"\tDías de trabajo: {medico[4]}")
-        print(f"\tHorario: {'Mañana' if medico[5] == 'm' else 'Tarde'}")
-        print("\n")
+        mostrarMedico(medico)
+
+# * FUNCIONES PACIENTES---------------------------------------------------------------------------------------------------------------------------
 
 
-def mostrarPacientes():
+def crearPaciente():
+    """ 
+    Función que crea un nuevo paciente y lo agrega a la lista de pacientes.
+
+    Parámetros:
+    - Ninguno
+
+    Retorna:
+    - None
+    """
+    paciente = []
+    print("\n\tEstimado(a) usuario ingrese la siguiente información\n")
+    paciente.append(input("Nombre del paciente: "))
+    paciente.append(input("Correo electrónico del paciente: "))
+    paciente.append(input("Dirección del paciente: "))
+    paciente.append(input("Número telefónico del paciente: "))
+
+    # TODO: Desplegar un menú con los medicos asignados, para que el usuario seleccione el medico desde el menú en lugar de digitarlo
+    # ! Owner: Jafeth Garro
+    paciente.append(input("\tNombre del médico asignado: "))
+    pacientes.append(paciente)
+    mostrarPaciente(paciente)
+    input("\nPresione enter para continuar...")
+
+
+def mostrarPaciente(paciente):
+    """
+    Muestra la información de un paciente.
+
+    Args:
+        paciente (list): Una lista que contiene la información del paciente en el siguiente orden:
+            - Nombre del paciente (str)
+            - Correo electrónico del paciente (str)
+            - Dirección del paciente (str)
+            - Teléfono del paciente (str)
+            - Médico tratante del paciente (str)
+    """
+    print(f"Nombre: {paciente[0]}")
+    print(f"Correo: {paciente[1]}")
+    print(f"Dirección: {paciente[2]}")
+    print(f"Teléfono: {paciente[3]}")
+    print(f"Médico tratante: {paciente[4]}\n")
+
+
+def mostrarTodosPacientes():
     """
     Muestra la información de los pacientes registrados.
 
@@ -103,13 +216,10 @@ def mostrarPacientes():
         return
 
     print("\n\t\tPacientes registrados\n")
-    for paciente in pacientes:
-        print(f"\tNombre: {paciente[0]}")
-        print(f"\tCorreo: {paciente[1]}")
-        print(f"\tDirección: {paciente[2]}")
-        print(f"\tTeléfono: {paciente[3]}")
-        print(f"\tMédico tratante: {paciente[4]}")
-        print("\n")
+
+    for i in range(len(pacientes)):
+        print(f"\n\tPaciente {i+1}")
+        mostrarPaciente(pacientes[i])
 
 
 def registrarCita():
@@ -202,13 +312,13 @@ while True:
                 # Lista de médicos
                 print(
                     "A continuación se muestran los médicos del consultorio dental:\n")
-                mostrarMedicos()
+                mostrarTodosMedicos()
 
             elif menu_option == "4":
                 # Lista de pacientes ya registrados
                 print(
                     "A continuación se muestran los pacientes del consultorio dental:\n")
-                mostrarPacientes()
+                mostrarTodosPacientes()
 
             elif menu_option == "5":
                 # Si el usuario elige regresar al menú principal
