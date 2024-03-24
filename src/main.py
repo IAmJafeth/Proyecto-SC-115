@@ -1,4 +1,4 @@
-presetación = """
+presentacion = """
     PROYECTO FINAL - Grupo #5
 
 Curso:          Programación Básica
@@ -15,7 +15,7 @@ Estudiantes:    Jafeth Garro Roldán
 # * FUNCIONES MEDICOS---------------------------------------------------------------------------------------------------------------------------
 
 
-def getNombreDiaTrabajo(index):
+def getNombreDia(index):
     """
     Retorna el nombre del día de la semana correspondiente al índice dado.
 
@@ -39,6 +39,10 @@ def getNombreDiaTrabajo(index):
         return "Sábado"
     if index == 6:
         return "Domingo"
+
+
+def getNombreHorario(horario):
+    return 'Mañana' if horario == 'm' else 'Tarde'
 
 
 def crearSemanaDeTrabajo():
@@ -88,7 +92,7 @@ def formatSemanaDeTrabajo(dias):
     semana = ""
     for i in range(len(dias)):
         if dias[i] == "Trabaja":
-            semana += getNombreDiaTrabajo(i) + ", "
+            semana += getNombreDia(i) + ", "
     return semana
 
 
@@ -113,7 +117,7 @@ def mostrarMedico(medico):
     print(f"Correo: {medico[2]}")
     print(f"Teléfono: {medico[3]}")
     print(f"Días de trabajo: {formatSemanaDeTrabajo(medico[4])}")
-    print(f"Horario: {'Mañana' if medico[5] == 'm' else 'Tarde'}\n")
+    print(f"Horario: {getNombreHorario(medico[5])}\n")
 
 
 def crearMedico():
@@ -136,7 +140,7 @@ def crearMedico():
 
     while True:
         horario = input(
-            "\tIngrese \"m\" si el médico trabaja en la mañana o \"t\" si el médico trabaja en la tarde: ").strip().lower()
+            "\nIngrese \"m\" si el médico trabaja en la mañana o \"t\" si el médico trabaja en la tarde: ").strip().lower()
         if horario == "m" or horario == "t":
             break
         print("\n-- OPCIÓN INCORECTA: Inténtelo denuevo -- ")
@@ -268,14 +272,129 @@ def mostrarTodosPacientes():
 
     input("\nPresione enter para continuar...")
 
+# * FUNCIONES CITAS---------------------------------------------------------------------------------------------------------------------------
+
+
+def getDiasDelMes(mes):
+    """
+    Retorna la cantidad de días que tiene un mes.
+
+    Parámetros:
+    - mes (int): El número del mes.
+
+    Retorna:
+    - int: La cantidad de días que tiene el mes.
+    """
+    if mes == 2:
+        return 28
+    if mes == 4 or mes == 6 or mes == 9 or mes == 11:
+        return 30
+
+    return 31
+
+
+def mostrarCita(cita):
+    """
+    Muestra la información de una cita.
+
+    Args:
+        cita (list): Una lista que contiene la información de la cita en el siguiente orden:
+            - Fecha de la cita (str)
+            - Nombre del paciente (str)
+            - Nombre del médico (str)
+            - Tratamiento (str)
+    """
+    print(f"Fecha: {cita[0]}")
+    print(f"Paciente: {cita[1]}")
+    print(f"Médico: {cita[2]}")
+    print(f"Tratamiento: {cita[3]}\n")
+
 
 def registrarCita():
-    # TODO: Avance 2 Módulo de Citas y Cancelación de Citas - Registro de cita:
-    # ! Owner: Jafeth Garro
     """
-    solicitar el día de la cita en cual se debe validar la disponibilidad de los horarios, médicos 
-    según la especialidad y tratamiento del paciente para agendar dicha cita. 
+    Función que permite al usuario registrar una cita.
+
+    Parámetros:
+    - Ninguno
+
+    Retorna:
+    - None
     """
+    print("\n\tREGISTRO DE CITAS")
+
+    if len(pacientes) == 0 or len(medicos) == 0:
+        print("\n\tNo hay pacientes o médicos registrados\n")
+        print("\tPor favor registre un paciente y un médico antes de agendar una cita\n")
+        input("\nPresione enter para continuar...")
+        return
+
+    while True:
+        cita = []
+
+        while True:
+            print("Seleccione el mes de la cita")
+            mes = int(input("Mes (1-12): "))
+            if mes < 1 or mes > 12:
+                print("\n-- OPCIÓN INCORECTA: Inténtelo denuevo -- ")
+                continue
+            break
+        dias = getDiasDelMes(mes)
+
+        while True:
+            print("Seleccione el día de la cita")
+            dia = int(input(f"Día (1-{dias}): "))
+            if dia < 1 or dia > dias:
+                print("\n-- OPCIÓN INCORECTA: Inténtelo denuevo -- ")
+                continue
+            break
+        fecha = f"{dia}/{mes}"
+        cita.append(fecha)
+
+        while True:
+            print("\nSeleccione al paciente")
+            for i in range(len(pacientes)):
+                print(f"{i+1}- {pacientes[i][0]}")
+            index = int(input("\nSeleccione un paciente: ")) - 1
+            if index < 0 or index >= len(pacientes):
+                print("Opción incorrecta, intente de nuevo")
+                continue
+            break
+        cita.append(pacientes[index][0])
+
+        while True:
+            count = 0
+            print(f"\nMedicos Disponibles para el {fecha}\n")
+            medicosDisponibles = []
+            for medico in medicos:
+                for citaAgendada in citasAgendadas:
+                    if citaAgendada[0] == fecha and citaAgendada[2] == medico[0]:
+                        count += 1
+                        break
+                else:
+                    medicosDisponibles.append(medico)
+
+            if count == len(medicos):
+                print("No hay médicos disponibles para esta fecha")
+                break
+
+            for i in range(len(medicosDisponibles)):
+                print(
+                    f"{i+1}- {medicosDisponibles[i][0]} ({medicosDisponibles[i][1]})")
+
+            index = int(input("\nSeleccione un médico: ")) - 1
+            if index < 0 or index >= len(medicos):
+                print("Opción incorrecta, intente de nuevo")
+                continue
+
+            cita.append(medicos[index][0])
+            break
+
+        cita.append(input("Tratamiento: "))
+        citasAgendadas.append(cita)
+        print("\n\tCita registrada exitosamente\n")
+        mostrarCita(cita)
+        input("\nPresione enter para continuar...")
+        break
 
 
 def cancelarCita():
@@ -317,12 +436,30 @@ medicos = []
 pacientes = []
 
 # 'citas' es una lista que almacena la información de todas las citas. Cada cita se representa como una lista de sus detalles.
-citas = []
+citasAgendadas = []
+
+# Datos de prueba de medicos
+
+medicos.append(["Dr. John Doe", "Cardiology",
+               "johndoe@example.com", "1234567890", ["Trabaja", "Trabaja", "Trabaja", "Trabaja", "Trabaja", "No Trabaja", "No Trabaja"], 'm'])
+medicos.append(["Dr. Jane Smith", "Neurology",
+               "janesmith@example.com", "0987654321", [" No Trabaja", " No Trabaja", "Trabaja", "Trabaja", "Trabaja", "Trabaja", "Trabaja"], 't'])
+
+# Datos de prueba de pacientes
+
+pacientes.append(["Alice Johnson", "alicejohnson@example.com",
+                 "123 Main St", "1234567890", "Dr. John Doe"])
+pacientes.append(["Bob Williams", "bobwilliams@example.com",
+                 "456 High St", "0987654321", "Dr. Jane Smith"])
+
+# Datos de prueba de citasAgendadas
+citasAgendadas.append(["Alice Johnson", "1/1", "Dr. John Doe", "Cardiology"])
+citasAgendadas.append(["Bob Williams", "2/1", "Dr. Jane Smith", "Neurology"])
 
 # * PROGRAMA PRINCIPAL ------------------------------------------------------------------------------------------------------------------------
 
 
-print(presetación)
+print(presentacion)
 
 while True:
 
@@ -384,6 +521,29 @@ while True:
         print("\n -- OPCIÓN AÚN EN DESARROLLO --")
         # TODO: Agregar funcionalidad de Módulo de Citas y Cancelación de Citas
         # !: Owners: Jafeth Garro y Aldo Mora
+
+        print("\n\t\t\tMODULO DE CITAS Y CANCELACIÓN DE CITAS")
+        print("\t\t1- Registrar cita")
+        print("\t\t2- Cancelar cita")
+        print("\t\t3- Regresar al MENÚ PRINCIPAL")
+
+        menu_option = input("\n\tSeleccione una opcion: ")
+
+        if menu_option == "1":
+            # Si el usuario elige registrar una cita
+            registrarCita()
+
+        elif menu_option == "2":
+            # Si el usuario elige cancelar una cita
+            cancelarCita()
+
+        elif menu_option == "3":
+            # Si el usuario elige regresar al menú principal
+            break
+
+        else:
+            # Si el usuario elige una opción incorrecta
+            print("\n-- OPCIÓN INCORECTA: Inténtelo denuevo -- ")
 
     elif menu_option == "3":  # ! Módulo de Pagos ----------------------------------------------------------------------------------
         print("\n -- OPCIÓN AÚN EN DESARROLLO --")
