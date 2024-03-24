@@ -59,11 +59,17 @@ def crearSemanaDeTrabajo():
         print(f"\t5- Viernes ({dias[4]})")
         print(f"\t6- Sábado ({dias[5]})")
         print(f"\t7- Domingo ({dias[6]})")
-        print("\t8- Finalizar selección")
+        print("\n\t8- Finalizar selección")
 
         dia = int(input("\nSeleccione un día: "))
+
         if dia == 8:
             break
+
+        if dia < 1 or dia > 7:
+            print("\n-- OPCIÓN INCORECTA: Inténtelo denuevo -- ")
+            continue
+
         dias[dia - 1] = "Trabaja"
 
     return dias
@@ -151,13 +157,48 @@ def mostrarTodosMedicos():
     """
     if len(medicos) == 0:
         print("\n\tNo hay médicos registrados\n")
+        input("\nPresione enter para continuar...")
         return
 
     print("\n\tMédicos registrados\n")
     for medico in medicos:
         mostrarMedico(medico)
 
+    input("\nPresione enter para continuar...")
+
 # * FUNCIONES PACIENTES---------------------------------------------------------------------------------------------------------------------------
+
+
+def asignarMedico():
+    """
+    Función que permite al usuario seleccionar un médico de una lista de médicos registrados.
+
+    Parámetros:
+    - Ninguno
+
+    Retorna:
+    - medico (list): Una lista que contiene la información del médico seleccionado en el siguiente orden:
+        - Nombre del médico (str)
+        - Especialidad del médico (str)
+        - Correo del médico (str)
+        - Teléfono del médico (str)
+        - Días de trabajo del médico (list)
+        - Horario del médico ('m' para mañana, 't' para tarde)
+    """
+    print("\n\tSeleccione un médico de la lista\n")
+    for i in range(len(medicos)):
+        print(f"\t{i+1}- {medicos[i][0]} ({medicos[i][1]})")
+
+    while True:
+        index = int(input("\nSeleccione un médico: ")) - 1
+
+        if index < 0 or index >= len(medicos):
+            print("Opción incorrecta, intente de nuevo")
+            continue
+
+        break
+
+    return medicos[index]
 
 
 def crearPaciente():
@@ -170,16 +211,19 @@ def crearPaciente():
     Retorna:
     - None
     """
+    if len(medicos) == 0:
+        print("\n\tNo hay médicos registrados\n")
+        print("\tPor favor registre un médico antes de agregar un paciente\n")
+        input("\nPresione enter para continuar...")
+        return
+
     paciente = []
     print("\n\tEstimado(a) usuario ingrese la siguiente información\n")
     paciente.append(input("Nombre del paciente: "))
     paciente.append(input("Correo electrónico del paciente: "))
     paciente.append(input("Dirección del paciente: "))
     paciente.append(input("Número telefónico del paciente: "))
-
-    # TODO: Desplegar un menú con los medicos asignados, para que el usuario seleccione el medico desde el menú en lugar de digitarlo
-    # ! Owner: Jafeth Garro
-    paciente.append(input("\tNombre del médico asignado: "))
+    paciente.append(asignarMedico()[0])
     pacientes.append(paciente)
     mostrarPaciente(paciente)
     input("\nPresione enter para continuar...")
@@ -213,6 +257,7 @@ def mostrarTodosPacientes():
     """
     if len(pacientes) == 0:
         print("\n\tNo hay pacientes registrados\n")
+        input("\nPresione enter para continuar...")
         return
 
     print("\n\t\tPacientes registrados\n")
@@ -220,6 +265,8 @@ def mostrarTodosPacientes():
     for i in range(len(pacientes)):
         print(f"\n\tPaciente {i+1}")
         mostrarPaciente(pacientes[i])
+
+    input("\nPresione enter para continuar...")
 
 
 def registrarCita():
@@ -268,6 +315,11 @@ medicos = []
 
 # 'pacientes' es una lista que almacena la información de todos los pacientes. Cada paciente se representa como una lista de sus detalles.
 pacientes = []
+
+# 'citas' es una lista que almacena la información de todas las citas. Cada cita se representa como una lista de sus detalles.
+citas = []
+
+# * PROGRAMA PRINCIPAL ------------------------------------------------------------------------------------------------------------------------
 
 
 print(presetación)
