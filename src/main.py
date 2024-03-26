@@ -165,8 +165,10 @@ def mostrarTodosMedicos():
         return
 
     print("\n\tMédicos registrados\n")
-    for medico in medicos:
-        mostrarMedico(medico)
+
+    for i in range(len(medicos)):
+        print(f"\n\tMédico {i+1}")
+        mostrarMedico(medicos[i])
 
     input("\nPresione enter para continuar...")
 
@@ -398,14 +400,22 @@ def registrarCita():
 
 
 def reprogramarCancelarCita():
-    encontrado=False
-    # TODO: Módulo de Citas y Cancelación de Citas - Cancelación y/o reprogramación de cita
-    # ! Owner: Aldo Mora
     """
-    en caso de aplicar para una cancelación de cita programada 
-    debe solicitar el día que tenía la cita agendada, y debe dar opción a que le permita reprogramar dicha cita 
-    a nuevo horario disponible según el tratamiento y medico a aplicar.
+    Reprograma o cancela una cita existente.
+
+    Esta función permite al usuario reprogramar o cancelar una cita existente.
+    Se solicita al usuario seleccionar el mes y día de la cita que desea reprogramar o cancelar.
+    Si la cita existe, se muestra la información actual de la cita y se le da la opción al usuario de reagendar o cancelar la cita.
+    Si la cita no existe, se muestra un mensaje indicando que no se encontró una cita en esa fecha.
+
+    Args:
+        None
+
+    Returns:
+        None
     """
+    encontrado = False
+
     print("\nREPROGRAMACION/CANCELACION DE CITAS")
     if len(pacientes) == 0 or len(medicos) == 0:
         print("\n\tNo hay pacientes o médicos registrados\n")
@@ -414,7 +424,7 @@ def reprogramarCancelarCita():
         return
 
     while True:
-        indice=0
+        indice = 0
         while True:
             print("Seleccione el mes de la cita")
             mes = int(input("Mes (1-12): "))
@@ -433,37 +443,48 @@ def reprogramarCancelarCita():
             break
         fecha = f"{dia}/{mes}"
         for c in citasAgendadas:
-            if c[0]==fecha:
-                print("Se ha encontrado la cita, los datos actuales son:")
+            if c[0] == fecha:
+                print("\nSe ha encontrado la cita, los datos actuales son:\n")
                 mostrarCita(c)
-                encontrado=True
+                encontrado = True
                 break
-            indice+=1
-        if encontrado==False:
-            print("No se ha encontrado una cita en esa fecha")
+            indice += 1
+        if encontrado == False:
+            print("\nNo se ha encontrado una cita en esa fecha")
+            input("\nPresione enter para continuar...")
             return
-        print("¿Desea reagendar o cancelar la cita?") 
-        print("1. Reagendar cita")   
-        print("2. Cancelar cita")   
-        print("3. Salir")   
-        opcion=input("Selecione una opcion ")
-        if opcion=="1":
+        print("¿\nDesea reagendar o cancelar la cita?")
+        print("1. Reagendar cita")
+        print("2. Cancelar cita")
+        print("3. Salir")
+        opcion = input("\nSelecione una opcion ")
+        if opcion == "1":
             reprogramarCita(indice)
-        elif opcion=="2":
+        elif opcion == "2":
             citasAgendadas.pop(indice)
-            print("La cita ha sido cancelada")
-        elif opcion=="3":
-            print("Regresando al menu principal")
+            print("\nLa cita ha sido cancelada")
+        elif opcion == "3":
+            print("\nRegresando al menu principal")
             return
-        else: 
+        else:
             print("Ingrese una opcion valida")
         input("\nPresione enter para continuar...")
         break
-        
+
+
 def reprogramarCita(indice):
-    indiceTemporal=0
-    encontrado=False
-    print("Reprogramar cita")
+    """
+    Reprograma una cita existente en base a un índice dado.
+
+    Parámetros:
+    - indice (int): El índice de la cita a reprogramar en la lista de citas agendadas.
+
+    Retorna:
+    None
+    """
+    indiceTemporal = 0
+    encontrado = False
+    print("\nReprogramar cita")
     while True:
         print("Seleccione el nuevo mes de la cita")
         mes = int(input("Mes (1-12): "))
@@ -481,29 +502,30 @@ def reprogramarCita(indice):
         break
     fecha = f"{dia}/{mes}"
     for cita in citasAgendadas:
-        if cita[0]==fecha and (cita[2]==citasAgendadas[indice][2] or cita[3]==citasAgendadas[indice][3]):
-            encontrado=True
+        if cita[0] == fecha and (cita[2] == citasAgendadas[indice][2] or cita[3] == citasAgendadas[indice][3]):
+            encontrado = True
             break
-    if encontrado==True:
+    if encontrado == True:
         print("Lo sentimos, en base al medico y tratamiento, no hay disponibilidad para reagendar la cita")
-    else: 
+    else:
         while True:
-            print("Si hay disponibilidad de horario, presione 1 para confirma la reprogramacion de su cita")
-            print("1. Confirmar reprogramacion")   
-            print("2. Cancelar reprogramacion")   
-            opc=input("Seleccione una opcion ")
-            if opc=="1":
-                citasAgendadas[indice][0]=fecha
-                print("La cita ha sido reprogramada exitosamente, a continuacion mostramos sus datos: ")
+            print(
+                "\nSi hay disponibilidad de horario, presione 1 para confirma la reprogramacion de su cita")
+            print("1. Confirmar reprogramacion")
+            print("2. Cancelar reprogramacion")
+            opc = input("\nSeleccione una opcion ")
+            if opc == "1":
+                citasAgendadas[indice][0] = fecha
+                print(
+                    "\nLa cita ha sido reprogramada exitosamente, a continuacion mostramos sus datos: ")
                 mostrarCita(citasAgendadas[indice])
                 break
-            elif opc=="2":
-                print("La reprogramacion ha sido cancelada")
+            elif opc == "2":
+                print("\nLa reprogramacion ha sido cancelada")
                 break
             else:
                 print("Ingrese una opcion valida")
                 continue
-        
 
 
 def procesarPagos():
@@ -552,8 +574,8 @@ pacientes.append(["Bob Williams", "bobwilliams@example.com",
                  "456 High St", "0987654321", "Dr. Jane Smith"])
 
 # Datos de prueba de citasAgendadas
-citasAgendadas.append(["1/1","Alice Johnson", "Dr. John Doe", "Cardiology"])
-citasAgendadas.append(["2/1","Bob Williams" , "Dr. Jane Smith", "Neurology"])
+citasAgendadas.append(["1/1", "Alice Johnson", "Dr. John Doe", "Cardiology"])
+citasAgendadas.append(["2/1", "Bob Williams", "Dr. Jane Smith", "Neurology"])
 
 # * PROGRAMA PRINCIPAL ------------------------------------------------------------------------------------------------------------------------
 
@@ -656,6 +678,3 @@ while True:
 
     else:  # ! Opción incorrecta
         print("\n-- OPCIÓN INCORECTA: Inténtelo denuevo -- ")
-
-
-
