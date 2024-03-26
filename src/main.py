@@ -527,6 +527,8 @@ def reprogramarCita(indice):
                 print("Ingrese una opcion valida")
                 continue
 
+#  * FUNCIONES PAGOS---------------------------------------------------------------------------------------------------------------------------
+
 
 def procesarPagos():
     # TODO: Avance 2 Módulo de Pagos - Formas  de  Pago
