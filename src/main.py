@@ -793,7 +793,31 @@ while True:
                 print("\n-- OPCIÓN INCORECTA: Inténtelo denuevo -- ")
 
     elif menu_option == "3":  # ! Módulo de Pagos ----------------------------------------------------------------------------------
-        procesarPagos()
+        while True:
+            # Solicito al usuario que elija una opción del menú, si se cumple (elige la opción) el programa continua.
+            print("\n\t\t\tMODULO DE PAGOS")
+            print("\t\t1- Formas de pago")
+            print("\t\t2- Facturación")
+            print("\t\t3- Regresar al MENÚ PRINCIPAL")
+
+            menu_option = input("\n\tSeleccione una opcion: ")
+
+            if menu_option == "1":
+                # Si el usuario elige Formas de pago
+                procesarPagos()
+
+            elif menu_option == "2":
+                # Si el usuario elige Facturación
+                print("\n -- OPCIÓN AÚN EN DESARROLLO --")
+
+            elif menu_option == "3":
+                # Si el usuario elige regresar al menú principal
+                break
+
+            else:
+                # Si el usuario elige una opción incorrecta
+                print("\n-- OPCIÓN INCORECTA: Inténtelo denuevo -- ")
+        
         # TODO: Agregar funcionalidad de Módulo de Citas y Cancelación de Citas
         # !: Owners: Daniel Vindas y Elena Gomez
 
