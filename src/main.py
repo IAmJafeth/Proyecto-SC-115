@@ -638,31 +638,30 @@ while True:
                 print("\n-- OPCIÓN INCORECTA: Inténtelo denuevo -- ")
 
     elif menu_option == "2":  # ! Módulo de Citas y Cancelación de Citas ----------------------------------------------------------
-        # TODO: Agregar funcionalidad de Módulo de Citas y Cancelación de Citas
-        # !: Owners: Jafeth Garro y Aldo Mora
+        while True:
+            # Solicito al usuario que elija una opción del menú, si se cumple (elige la opción) el programa continua.
+            print("\n\t\t\tMODULO DE CITAS Y CANCELACIÓN DE CITAS")
+            print("\t\t1- Registrar cita")
+            print("\t\t2- Cancelar cita")
+            print("\t\t3- Regresar al MENÚ PRINCIPAL")
 
-        print("\n\t\t\tMODULO DE CITAS Y CANCELACIÓN DE CITAS")
-        print("\t\t1- Registrar cita")
-        print("\t\t2- Cancelar cita")
-        print("\t\t3- Regresar al MENÚ PRINCIPAL")
+            menu_option = input("\n\tSeleccione una opcion: ")
 
-        menu_option = input("\n\tSeleccione una opcion: ")
+            if menu_option == "1":
+                # Si el usuario elige registrar una cita
+                registrarCita()
 
-        if menu_option == "1":
-            # Si el usuario elige registrar una cita
-            registrarCita()
+            elif menu_option == "2":
+                # Si el usuario elige cancelar una cita
+                reprogramarCancelarCita()
 
-        elif menu_option == "2":
-            # Si el usuario elige cancelar una cita
-            reprogramarCancelarCita()
+            elif menu_option == "3":
+                # Si el usuario elige regresar al menú principal
+                break
 
-        elif menu_option == "3":
-            # Si el usuario elige regresar al menú principal
-            break
-
-        else:
-            # Si el usuario elige una opción incorrecta
-            print("\n-- OPCIÓN INCORECTA: Inténtelo denuevo -- ")
+            else:
+                # Si el usuario elige una opción incorrecta
+                print("\n-- OPCIÓN INCORECTA: Inténtelo denuevo -- ")
 
     elif menu_option == "3":  # ! Módulo de Pagos ----------------------------------------------------------------------------------
         print("\n -- OPCIÓN AÚN EN DESARROLLO --")
