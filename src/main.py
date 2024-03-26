@@ -531,23 +531,32 @@ def reprogramarCita(indice):
 
 
 def printCitasSinPagar():
-
-    citasSinPagar = []
-
-    for cita in citasAgendadas:
-        if cita[4] == False:
-            citasSinPagar.append(cita)
+    citasSinPagar = getCitasSinPagar()
 
     for i in range(len(citasSinPagar)):
         print(f"{i+1}- Fecha: {citasSinPagar[i][0]} Paciente: {
               citasSinPagar[i][1]} Tratamiento {citasSinPagar[i][3]}")
 
+
+def getCitasSinPagar():
+    citasSinPagar = []
+    for cita in citasAgendadas:
+        if cita[4] == False:
+            citasSinPagar.append(cita)
     return citasSinPagar
 
 
 def seleccionarCitaAPagar():
-    print("\n\tSELECCIONE LA CITA QUE DESEA CANCELAR\n")
-    citasSinPagar = printCitasSinPagar()
+
+    citasSinPagar = getCitasSinPagar()
+
+    if len(citasSinPagar) == 0:
+        print("\n\tNO HAY CITAS POR PAGAR")
+        input("Presione enter para continuar...")
+        return
+
+    print("\n\tSELECCIONE LA CITA QUE DESEA PAGAR\n")
+    printCitasSinPagar()
 
     while True:
         index = int(input("\nSeleccione una cita: ")) - 1
@@ -560,17 +569,119 @@ def seleccionarCitaAPagar():
     return citasSinPagar[index]
 
 
+def buscarIndiceCita(fecha, paciente, tratamiento):
+    for i in range(len(citasAgendadas)):
+        cita = citasAgendadas[i]
+        if cita[0] == fecha and cita[1] == paciente and cita[3] == tratamiento:
+            return i
+
+    return None
+
+
 #  * FUNCIONES PAGOS---------------------------------------------------------------------------------------------------------------------------
+
+#  * Funciones Daniel-----------------------------------------------------------------------------------------------
+def marcarCitaPagada(index, metodoPago):
+    citasAgendadas[index][4] = True
+    citasAgendadas[index].append(metodoPago)
 
 
 def procesarPagos():
-    # TODO: Avance 2 Módulo de Pagos - Formas  de  Pago
-    # ! Owner: Daniel Vindas
-    """
-    Se  debe  registrar  la  forma  de  pago  según  los  tratamientos  solicitados,  aquí  se 
-    manejarían las formas de pago en efectivo, transferencia sinpe, tarjeta de crédito o débito; adicional de un 
-    grupo de descuentos según el tratamiento que usted con su equipo defina como parte de su programa.
-    """
+
+    cita = seleccionarCitaAPagar()
+
+    if not cita:
+        return
+
+    print("╭━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╮")
+    print("│               **Formas De Pago**                    │")
+    print("├─────────────────────────────────────────────────────┤")
+    print("│Métodos de pago:                                     │")
+    print("├─────────────────────────────────────────────────────┤")
+    print("│ /// 1. Pago en efectivo                             │")
+    print("│ /// 2. Pago Por Transferencia Sinpe                 │")
+    print("│ /// 3. Pago por tarjeta de credito/débito           │")
+    print("╰━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╯")
+
+    while True:
+        metodoDePago = int(
+            input("Por favor ingrese el método de pago con el que desea cancelar: "))
+
+        if metodoDePago < 1 or metodoDePago > 3:
+            print("\n-- OPCIÓN INCORECTA: Inténtelo denuevo --")
+            continue
+
+        break
+
+    nombreMetodoPago = getNombreMetodoPago(metodoDePago)
+    descuento = descuento_segun_MetodoPago(nombreMetodoPago)
+    tratamiento = cita[3]
+    precioNeto = preciosTratamientos(tratamiento)
+    precioFinal = calcularPrecioFinal(precioNeto, descuento)
+
+    marcarCitaPagada(buscarIndiceCita(
+        cita[0], cita[1], tratamiento), nombreMetodoPago)
+
+    print(citasAgendadas[buscarIndiceCita(cita[0], cita[1], tratamiento)])
+    print("\nTransaccion completada con exito: \n")
+    print(f"Tratamiento:\t{tratamiento}")
+    print(f"Metodo de Pago:\t{nombreMetodoPago}")
+    print(f"Precio Orignial:\t{precioNeto}")
+    print(f"Descuento:\t{descuento*100}%")
+    print(f"Precio Final:\t{precioFinal}")
+    input("\nPresione enter para continuar...")
+
+
+def preciosTratamientos(tratamiento):
+    if tratamiento == "Limpieza dental":
+        return 30_000
+    elif tratamiento == "Puentes dentales":
+        return 150_000
+    elif tratamiento == "Extracción dental":
+        return 40_000
+    elif tratamiento == "Restauración dental":
+        return 60_000
+    elif tratamiento == "Blanqueamiento dental":
+        return 50_000
+    elif tratamiento == "Carillas de porcelana":
+        return 80_000
+    elif tratamiento == "Tratamiento de caries":
+        return 25_000
+    elif tratamiento == "Colocación de brackets":
+        return 200_000
+    elif tratamiento == "Tratamiento de gingivitis":
+        return 35_000
+    elif tratamiento == "Colocación de retenedores":
+        return 60_000
+    elif tratamiento == "Tratamiento de lesiones faciales":
+        return 300_000
+    elif tratamiento == "Cirugía reconstructiva de mandíbula y maxilar":
+        return 500_000
+
+
+def descuento_segun_MetodoPago(metodo):
+    if metodo == "Efectivo":
+        return 0.10
+    elif metodo == "Transferencia Sinpe":
+        return 0.30
+    elif metodo == "Tarjeta débito/credito":
+        return 0.05
+
+
+def getNombreMetodoPago(metodo):
+    if metodo == 1:
+        return "Efectivo"
+    if metodo == 2:
+        return "Transferencia Sinpe"
+    if metodo == 3:
+        return "Tarjeta débito/credito"
+
+
+def calcularPrecioFinal(precioNeto, descuento):
+    return precioNeto - precioNeto * descuento
+# *-------------------------------------------------------------------------------------------------------------------------------------------
+
+# * Funciones Elena---------------------------------------------------------------------------------------------------------------------------
 
 
 def generarFactura():
@@ -582,6 +693,7 @@ def generarFactura():
     Clínica  de  atención,  Especialidad,  Moneda,  Nombre  del  Paciente,  Servicio,  Cantidad,  Precio,  Detalle, 
     Subtotal, Descuento, IVA, Total General.
     """
+# *-------------------------------------------------------------------------------------------------------------------------------------------
 
 
 # * VARIABLES --------------------------------------------------------------------------------------------------------------------------------
@@ -594,32 +706,8 @@ pacientes = []
 # 'citas' es una lista que almacena la información de todas las citas. Cada cita se representa como una lista de sus detalles.
 citasAgendadas = []
 
-# Datos de prueba de medicos
-
-medicos.append(["Dr. John Doe", "Cardiology",
-               "johndoe@example.com", "1234567890", ["Trabaja", "Trabaja", "Trabaja", "Trabaja", "Trabaja", "No Trabaja", "No Trabaja"], 'm'])
-medicos.append(["Dr. Jane Smith", "Neurology",
-               "janesmith@example.com", "0987654321", [" No Trabaja", " No Trabaja", "Trabaja", "Trabaja", "Trabaja", "Trabaja", "Trabaja"], 't'])
-
-# Datos de prueba de pacientes
-
-pacientes.append(["Alice Johnson", "alicejohnson@example.com",
-                 "123 Main St", "1234567890", "Dr. John Doe"])
-pacientes.append(["Bob Williams", "bobwilliams@example.com",
-                 "456 High St", "0987654321", "Dr. Jane Smith"])
-
-cita = ["1/1", "Alice Johnson", "Dr. John Doe", "Cardiology", False]
-
-# Datos de prueba de citasAgendadas
-citasAgendadas.append(cita)
-citasAgendadas.append(
-    ["2/1", "Bob Williams", "Dr. Jane Smith", "Neurology", False])
-
-citaAPagar = seleccionarCitaAPagar()
-print(citaAPagar[3])
 
 # * PROGRAMA PRINCIPAL ------------------------------------------------------------------------------------------------------------------------
-
 print(presentacion)
 
 while True:
@@ -705,7 +793,7 @@ while True:
                 print("\n-- OPCIÓN INCORECTA: Inténtelo denuevo -- ")
 
     elif menu_option == "3":  # ! Módulo de Pagos ----------------------------------------------------------------------------------
-        print("\n -- OPCIÓN AÚN EN DESARROLLO --")
+        procesarPagos()
         # TODO: Agregar funcionalidad de Módulo de Citas y Cancelación de Citas
         # !: Owners: Daniel Vindas y Elena Gomez
 
