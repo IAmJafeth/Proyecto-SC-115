@@ -397,7 +397,8 @@ def registrarCita():
         break
 
 
-def cancelarCita():
+def reprogramarCancelarCita():
+    encontrado=False
     # TODO: Módulo de Citas y Cancelación de Citas - Cancelación y/o reprogramación de cita
     # ! Owner: Aldo Mora
     """
@@ -405,6 +406,104 @@ def cancelarCita():
     debe solicitar el día que tenía la cita agendada, y debe dar opción a que le permita reprogramar dicha cita 
     a nuevo horario disponible según el tratamiento y medico a aplicar.
     """
+    print("\nREPROGRAMACION/CANCELACION DE CITAS")
+    if len(pacientes) == 0 or len(medicos) == 0:
+        print("\n\tNo hay pacientes o médicos registrados\n")
+        print("\tPor favor registre un paciente y un médico antes de agendar una cita\n")
+        input("\nPresione enter para continuar...")
+        return
+
+    while True:
+        indice=0
+        while True:
+            print("Seleccione el mes de la cita")
+            mes = int(input("Mes (1-12): "))
+            if mes < 1 or mes > 12:
+                print("\n-- OPCIÓN INCORECTA: Inténtelo denuevo -- ")
+                continue
+            break
+        dias = getDiasDelMes(mes)
+
+        while True:
+            print("Seleccione el día de la cita")
+            dia = int(input(f"Día (1-{dias}): "))
+            if dia < 1 or dia > dias:
+                print("\n-- OPCIÓN INCORECTA: Inténtelo denuevo -- ")
+                continue
+            break
+        fecha = f"{dia}/{mes}"
+        for c in citasAgendadas:
+            if c[0]==fecha:
+                print("Se ha encontrado la cita, los datos actuales son:")
+                mostrarCita(c)
+                encontrado=True
+                break
+            indice+=1
+        if encontrado==False:
+            print("No se ha encontrado una cita en esa fecha")
+            return
+        print("¿Desea reagendar o cancelar la cita?") 
+        print("1. Reagendar cita")   
+        print("2. Cancelar cita")   
+        print("3. Salir")   
+        opcion=input("Selecione una opcion ")
+        if opcion=="1":
+            reprogramarCita(indice)
+        elif opcion=="2":
+            citasAgendadas.pop(indice)
+            print("La cita ha sido cancelada")
+        elif opcion=="3":
+            print("Regresando al menu principal")
+            return
+        else: 
+            print("Ingrese una opcion valida")
+        input("\nPresione enter para continuar...")
+        break
+        
+def reprogramarCita(indice):
+    indiceTemporal=0
+    encontrado=False
+    print("Reprogramar cita")
+    while True:
+        print("Seleccione el nuevo mes de la cita")
+        mes = int(input("Mes (1-12): "))
+        if mes < 1 or mes > 12:
+            print("\n-- OPCIÓN INCORECTA: Inténtelo denuevo -- ")
+            continue
+        break
+    dias = getDiasDelMes(mes)
+    while True:
+        print("Seleccione el día de la cita")
+        dia = int(input(f"Día (1-{dias}): "))
+        if dia < 1 or dia > dias:
+            print("\n-- OPCIÓN INCORECTA: Inténtelo denuevo -- ")
+            continue
+        break
+    fecha = f"{dia}/{mes}"
+    for cita in citasAgendadas:
+        if cita[0]==fecha and (cita[2]==citasAgendadas[indice][2] or cita[3]==citasAgendadas[indice][3]):
+            encontrado=True
+            break
+    if encontrado==True:
+        print("Lo sentimos, en base al medico y tratamiento, no hay disponibilidad para reagendar la cita")
+    else: 
+        while True:
+            print("Si hay disponibilidad de horario, presione 1 para confirma la reprogramacion de su cita")
+            print("1. Confirmar reprogramacion")   
+            print("2. Cancelar reprogramacion")   
+            opc=input("Seleccione una opcion ")
+            if opc=="1":
+                citasAgendadas[indice][0]=fecha
+                print("La cita ha sido reprogramada exitosamente, a continuacion mostramos sus datos: ")
+                mostrarCita(citasAgendadas[indice])
+                break
+            elif opc=="2":
+                print("La reprogramacion ha sido cancelada")
+                break
+            else:
+                print("Ingrese una opcion valida")
+                continue
+        
 
 
 def procesarPagos():
@@ -453,11 +552,10 @@ pacientes.append(["Bob Williams", "bobwilliams@example.com",
                  "456 High St", "0987654321", "Dr. Jane Smith"])
 
 # Datos de prueba de citasAgendadas
-citasAgendadas.append(["Alice Johnson", "1/1", "Dr. John Doe", "Cardiology"])
-citasAgendadas.append(["Bob Williams", "2/1", "Dr. Jane Smith", "Neurology"])
+citasAgendadas.append(["1/1","Alice Johnson", "Dr. John Doe", "Cardiology"])
+citasAgendadas.append(["2/1","Bob Williams" , "Dr. Jane Smith", "Neurology"])
 
 # * PROGRAMA PRINCIPAL ------------------------------------------------------------------------------------------------------------------------
-
 
 print(presentacion)
 
@@ -518,7 +616,6 @@ while True:
                 print("\n-- OPCIÓN INCORECTA: Inténtelo denuevo -- ")
 
     elif menu_option == "2":  # ! Módulo de Citas y Cancelación de Citas ----------------------------------------------------------
-        print("\n -- OPCIÓN AÚN EN DESARROLLO --")
         # TODO: Agregar funcionalidad de Módulo de Citas y Cancelación de Citas
         # !: Owners: Jafeth Garro y Aldo Mora
 
@@ -535,7 +632,7 @@ while True:
 
         elif menu_option == "2":
             # Si el usuario elige cancelar una cita
-            cancelarCita()
+            reprogramarCancelarCita()
 
         elif menu_option == "3":
             # Si el usuario elige regresar al menú principal
@@ -559,3 +656,6 @@ while True:
 
     else:  # ! Opción incorrecta
         print("\n-- OPCIÓN INCORECTA: Inténtelo denuevo -- ")
+
+
+
