@@ -392,6 +392,8 @@ def registrarCita():
             break
 
         cita.append(input("Tratamiento: "))
+        cita.append(False)
+
         citasAgendadas.append(cita)
         print("\n\tCita registrada exitosamente\n")
         mostrarCita(cita)
@@ -527,6 +529,37 @@ def reprogramarCita(indice):
                 print("Ingrese una opcion valida")
                 continue
 
+
+def printCitasSinPagar():
+
+    citasSinPagar = []
+
+    for cita in citasAgendadas:
+        if cita[4] == False:
+            citasSinPagar.append(cita)
+
+    for i in range(len(citasSinPagar)):
+        print(f"{i+1}- Fecha: {citasSinPagar[i][0]} Paciente: {
+              citasSinPagar[i][1]} Tratamiento {citasSinPagar[i][3]}")
+
+    return citasSinPagar
+
+
+def seleccionarCitaAPagar():
+    print("\n\tSELECCIONE LA CITA QUE DESEA CANCELAR\n")
+    citasSinPagar = printCitasSinPagar()
+
+    while True:
+        index = int(input("\nSeleccione una cita: ")) - 1
+
+        if index < 0 or index >= len(citasSinPagar):
+            print("\n-- OPCIÓN INCORECTA: Inténtelo denuevo --")
+            continue
+        break
+
+    return citasSinPagar[index]
+
+
 #  * FUNCIONES PAGOS---------------------------------------------------------------------------------------------------------------------------
 
 
@@ -575,9 +608,15 @@ pacientes.append(["Alice Johnson", "alicejohnson@example.com",
 pacientes.append(["Bob Williams", "bobwilliams@example.com",
                  "456 High St", "0987654321", "Dr. Jane Smith"])
 
+cita = ["1/1", "Alice Johnson", "Dr. John Doe", "Cardiology", False]
+
 # Datos de prueba de citasAgendadas
-citasAgendadas.append(["1/1", "Alice Johnson", "Dr. John Doe", "Cardiology"])
-citasAgendadas.append(["2/1", "Bob Williams", "Dr. Jane Smith", "Neurology"])
+citasAgendadas.append(cita)
+citasAgendadas.append(
+    ["2/1", "Bob Williams", "Dr. Jane Smith", "Neurology", False])
+
+citaAPagar = seleccionarCitaAPagar()
+print(citaAPagar[3])
 
 # * PROGRAMA PRINCIPAL ------------------------------------------------------------------------------------------------------------------------
 
