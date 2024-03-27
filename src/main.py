@@ -55,15 +55,19 @@ def crearSemanaDeTrabajo():
     dias = ["No Trabaja"] * 7
 
     while True:
-        print("\n\t\tSeleccione los días de trabajo del médico")
-        print(f"\t1- Lunes ({dias[0]})")
-        print(f"\t2- Martes ({dias[1]})")
-        print(f"\t3- Miércoles ({dias[2]})")
-        print(f"\t4- Jueves ({dias[3]})")
-        print(f"\t5- Viernes ({dias[4]})")
-        print(f"\t6- Sábado ({dias[5]})")
-        print(f"\t7- Domingo ({dias[6]})")
-        print("\n\t8- Finalizar selección")
+        print("╭━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╮")
+        print("│      **Seleccione los días de trabajo del médico**  │")
+        print("├─────────────────────────────────────────────────────┤")
+        print(f"│ /// 1- Lunes ({dias[0]})                           ")
+        print(f"│ /// 2- Martes ({dias[1]})                          ")
+        print(f"│ /// 3- Miércoles ({dias[2]})                       ")
+        print(f"│ /// 4- Jueves ({dias[3]})                          ")
+        print(f"│ /// 5- Viernes ({dias[4]})                         ")
+        print(f"│ /// 6- Sábado ({dias[5]})                          ")
+        print(f"│ /// 7- Domingo ({dias[6]})                         ")
+        print("├─────────────────────────────────────────────────────┤")
+        print("│ /// 8- Finalizar selección                          │")
+        print("╰━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╯")
 
         dia = int(input("\nSeleccione un día: "))
 
@@ -198,8 +202,12 @@ def asignarMedico():
         - Horario del médico ('m' para mañana, 't' para tarde)
     """
     print("\n\tSeleccione un médico de la lista\n")
+    print("╭━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╮")
+    print("│           **Seleccione un médico de la lista**      │")
+    print("├─────────────────────────────────────────────────────┤")
     for i in range(len(medicos)):
-        print(f"\t{i+1}- {medicos[i][0]} ({medicos[i][1]})")
+        print(f"│ /// {i+1}- {medicos[i][0]} ({medicos[i][1]})   ")
+    print("╰━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╯")
 
     while True:
         index = int(input("\nSeleccione un médico: ")) - 1
@@ -837,12 +845,18 @@ print(presentacion)
 while True:
 
     # Mostraremos el menú principal:
-    print("\n\t\tMENÚ PRINCIPAL")
-    print("\t1- Módulo de expedientes")
-    print("\t2- Módulo de citas y cancelación de citas")
-    print("\t3- Módulo de pagos")
-    print("\t4- Módulo de reportes")
-    print("\t5- Salir")
+    print("╭━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╮")
+    print("│               **MENÚ PRINCIPAL**                    │")
+    print("├─────────────────────────────────────────────────────┤")
+    print("│Opciones:                                            │")
+    print("├─────────────────────────────────────────────────────┤")
+    print("│ /// 1- Módulo de expedientes                        │")
+    print("│ /// 2- Módulo de citas y cancelación de citas       │")
+    print("│ /// 3- Módulo de pagos                              │")
+    print("│ /// 4- Módulo de reportes                           │")
+    print("├─────────────────────────────────────────────────────┤")
+    print("│ /// 5- Salir                                        │")
+    print("╰━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╯")
 
     # Solicito al usuario que elija una opción del menú, si se cumple (elige la opción) el programa continua.
     menu_option = input("\nSeleccione una opcion: ")
@@ -854,12 +868,18 @@ while True:
         while True:
             # Solicito al usuario que elija una opción del menú, si se cumple (elige la opción) el programa continua.
             # Mostraremos el menú del Módulo de Expedientes:
-            print("\n\t\t\tMODULO DE EXPEDIENTES ")
-            print("\t\t1- Agregar médico")
-            print("\t\t2- Agregar pacientes")
-            print("\t\t3- Ver médicos")
-            print("\t\t4- Ver pacientes")
-            print("\t\t5- Regresar al MENÚ PRINCIPAL")
+            print("╭━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╮")
+            print("│              **MODULO DE EXPEDIENTES**              │")
+            print("├─────────────────────────────────────────────────────┤")
+            print("│Opciones:                                            │")
+            print("├─────────────────────────────────────────────────────┤")
+            print("│ /// 1- Agregar médico                               │")
+            print("│ /// 2- Agregar pacientes                            │")
+            print("│ /// 3- Ver médicos                                  │")
+            print("│ /// 4- Ver pacientes                                │")
+            print("├─────────────────────────────────────────────────────┤")
+            print("│ /// 5- Regresar al MENÚ PRINCIPAL                   │")
+            print("╰━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╯")
 
             menu_option = input("\n\tSeleccione una opcion: ")
 
@@ -899,11 +919,17 @@ while True:
     ):  # ! Módulo de Citas y Cancelación de Citas ----------------------------------------------------------
         while True:
             # Solicito al usuario que elija una opción del menú, si se cumple (elige la opción) el programa continua.
-            print("\n\t\t\tMODULO DE CITAS Y CANCELACIÓN DE CITAS")
-            print("\t\t1- Registrar cita")
-            print("\t\t2- Cancelar cita")
-            print("\t\t3- Ver citas agendadas")
-            print("\t\t4- Regresar al MENÚ PRINCIPAL")
+            print("╭━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╮")
+            print("│     **MODULO DE CITAS Y CANCELACIÓN DE CITAS**      │")
+            print("├─────────────────────────────────────────────────────┤")
+            print("│Opciones:                                            │")
+            print("├─────────────────────────────────────────────────────┤")
+            print("│ /// 1- Registrar cita                               │")
+            print("│ /// 2- Cancelar cita                                │")
+            print("│ /// 3- Ver citas agendadas                          │")
+            print("├─────────────────────────────────────────────────────┤")
+            print("│ /// 4- Regresar al MENÚ PRINCIPAL                   │")
+            print("╰━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╯")
 
             menu_option = input("\n\tSeleccione una opcion: ")
 
@@ -933,10 +959,16 @@ while True:
     ):  # ! Módulo de Pagos ----------------------------------------------------------------------------------
         while True:
             # Solicito al usuario que elija una opción del menú, si se cumple (elige la opción) el programa continua.
-            print("\n\t\t\tMODULO DE PAGOS")
-            print("\t\t1- Formas de pago")
-            print("\t\t2- Facturación")
-            print("\t\t3- Regresar al MENÚ PRINCIPAL")
+            print("╭━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╮")
+            print("│                **MODULO DE PAGOS**                  │")
+            print("├─────────────────────────────────────────────────────┤")
+            print("│Opciones:                                            │")
+            print("├─────────────────────────────────────────────────────┤")
+            print("│ /// 1- Formas de pago                               │")
+            print("│ /// 2- Facturación                                  │")
+            print("├─────────────────────────────────────────────────────┤")
+            print("│ /// 3- Regresar al MENÚ PRINCIPAL                   │")
+            print("╰━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╯")
 
             menu_option = input("\n\tSeleccione una opcion: ")
 
