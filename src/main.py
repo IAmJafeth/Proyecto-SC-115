@@ -42,7 +42,7 @@ def getNombreDia(index):
 
 
 def getNombreHorario(horario):
-    return 'Mañana' if horario == 'm' else 'Tarde'
+    return "Mañana" if horario == "m" else "Tarde"
 
 
 def crearSemanaDeTrabajo():
@@ -139,8 +139,13 @@ def crearMedico():
     medico.append(crearSemanaDeTrabajo())
 
     while True:
-        horario = input(
-            "\nIngrese \"m\" si el médico trabaja en la mañana o \"t\" si el médico trabaja en la tarde: ").strip().lower()
+        horario = (
+            input(
+                '\nIngrese "m" si el médico trabaja en la mañana o "t" si el médico trabaja en la tarde: '
+            )
+            .strip()
+            .lower()
+        )
         if horario == "m" or horario == "t":
             break
         print("\n-- OPCIÓN INCORECTA: Inténtelo denuevo -- ")
@@ -171,6 +176,7 @@ def mostrarTodosMedicos():
         mostrarMedico(medicos[i])
 
     input("\nPresione enter para continuar...")
+
 
 # * FUNCIONES PACIENTES---------------------------------------------------------------------------------------------------------------------------
 
@@ -208,7 +214,7 @@ def asignarMedico():
 
 
 def crearPaciente():
-    """ 
+    """
     Función que crea un nuevo paciente y lo agrega a la lista de pacientes.
 
     Parámetros:
@@ -274,6 +280,7 @@ def mostrarTodosPacientes():
 
     input("\nPresione enter para continuar...")
 
+
 # * FUNCIONES CITAS---------------------------------------------------------------------------------------------------------------------------
 
 
@@ -312,6 +319,92 @@ def mostrarCita(cita):
     print(f"Tratamiento: {cita[3]}\n")
 
 
+def menuTratamientos():
+    print(
+        "╭━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╮"
+    )
+    print(
+        "│                                             Opciones de tratamientos                                                        │"
+    )
+    print(
+        "├─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤"
+    )
+    print(
+        "│ /// 1.  Limpieza dental                                 Odontologia general           - Odontólogo                          │"
+    )
+    print(
+        "│ /// 2.  Puentes dentales                                Prótesis dental               - Prostodoncista                      │"
+    )
+    print(
+        "│ /// 3.  Extracción dental                               Odontologia general           - Odontólogo                          │"
+    )
+    print(
+        "│ /// 4.  Restauración dental                             Estética dental               - Dentista estético                   │"
+    )
+    print(
+        "│ /// 5.  Blanqueamiento dental                           Estética dental               - Dentista estético                   │"
+    )
+    print(
+        "│ /// 6.  Carillas de porcelada                           Estética dental               - Dentista estético                   │"
+    )
+    print(
+        "│ /// 10. Tratamiento de caries                           Odontologia general           - Odontólogo                          │"
+    )
+    print(
+        "│ /// 7.  Colocación de brackets                          Ortodoncia                    - Ortodoncista                        │"
+    )
+    print(
+        "│ /// 8.  Tratamiento de gingivitis                       Odontologia general           - Odontólogo                          │"
+    )
+    print(
+        "│ /// 9.  Colocación de retenedores                       Ortodoncia                    - Ortodoncista                        │"
+    )
+    print(
+        "│ /// 12. Tratamiento de lesiones faciales                Cirugía oral y maxilofacial   - Cirujano oral y maxilofacial        │"
+    )
+    print(
+        "│ /// 11. Cirugía reconstructiva de mandíbula y maxilar   Cirugía oral y maxilofacial   - Cirujano oral y maxilofacial        │"
+    )
+    print(
+        "╰━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╯"
+    )
+
+    while True:
+        opcion = int(input("\nSeleccione un tratamiento: "))
+        if opcion < 1 or opcion > 12:
+            print("Opción incorrecta, intente de nuevo")
+            continue
+        break
+    return opcion
+
+
+def getNombreTratamiento(index):
+    if index == 1:
+        return "Limpieza dental"
+    if index == 2:
+        return "Puentes dentales"
+    if index == 3:
+        return "Extracción dental"
+    if index == 4:
+        return "Restauración dental"
+    if index == 5:
+        return "Blanqueamiento dental"
+    if index == 6:
+        return "Carillas de porcelana"
+    if index == 7:
+        return "Tratamiento de caries"
+    if index == 8:
+        return "Colocación de brackets"
+    if index == 9:
+        return "Tratamiento de gingivitis"
+    if index == 10:
+        return "Colocación de retenedores"
+    if index == 11:
+        return "Tratamiento de lesiones faciales"
+    if index == 12:
+        return "Cirugía reconstructiva de mandíbula y maxilar"
+
+
 def registrarCita():
     """
     Función que permite al usuario registrar una cita.
@@ -326,7 +419,9 @@ def registrarCita():
 
     if len(pacientes) == 0 or len(medicos) == 0:
         print("\n\tNo hay pacientes o médicos registrados\n")
-        print("\tPor favor registre un paciente y un médico antes de agendar una cita\n")
+        print(
+            "\tPor favor registre un paciente y un médico antes de agendar una cita\n"
+        )
         input("\nPresione enter para continuar...")
         return
 
@@ -380,8 +475,7 @@ def registrarCita():
                 break
 
             for i in range(len(medicosDisponibles)):
-                print(
-                    f"{i+1}- {medicosDisponibles[i][0]} ({medicosDisponibles[i][1]})")
+                print(f"{i+1}- {medicosDisponibles[i][0]} ({medicosDisponibles[i][1]})")
 
             index = int(input("\nSeleccione un médico: ")) - 1
             if index < 0 or index >= len(medicos):
@@ -391,7 +485,8 @@ def registrarCita():
             cita.append(medicos[index][0])
             break
 
-        cita.append(input("Tratamiento: "))
+        tratamiento = getNombreTratamiento(menuTratamientos())
+        cita.append(tratamiento)
         cita.append(False)
 
         citasAgendadas.append(cita)
@@ -421,7 +516,9 @@ def reprogramarCancelarCita():
     print("\nREPROGRAMACION/CANCELACION DE CITAS")
     if len(pacientes) == 0 or len(medicos) == 0:
         print("\n\tNo hay pacientes o médicos registrados\n")
-        print("\tPor favor registre un paciente y un médico antes de agendar una cita\n")
+        print(
+            "\tPor favor registre un paciente y un médico antes de agendar una cita\n"
+        )
         input("\nPresione enter para continuar...")
         return
 
@@ -504,22 +601,28 @@ def reprogramarCita(indice):
         break
     fecha = f"{dia}/{mes}"
     for cita in citasAgendadas:
-        if cita[0] == fecha and (cita[2] == citasAgendadas[indice][2] or cita[3] == citasAgendadas[indice][3]):
+        if cita[0] == fecha and (
+            cita[2] == citasAgendadas[indice][2] or cita[3] == citasAgendadas[indice][3]
+        ):
             encontrado = True
             break
     if encontrado == True:
-        print("Lo sentimos, en base al medico y tratamiento, no hay disponibilidad para reagendar la cita")
+        print(
+            "Lo sentimos, en base al medico y tratamiento, no hay disponibilidad para reagendar la cita"
+        )
     else:
         while True:
             print(
-                "\nSi hay disponibilidad de horario, presione 1 para confirma la reprogramacion de su cita")
+                "\nSi hay disponibilidad de horario, presione 1 para confirma la reprogramacion de su cita"
+            )
             print("1. Confirmar reprogramacion")
             print("2. Cancelar reprogramacion")
             opc = input("\nSeleccione una opcion ")
             if opc == "1":
                 citasAgendadas[indice][0] = fecha
                 print(
-                    "\nLa cita ha sido reprogramada exitosamente, a continuacion mostramos sus datos: ")
+                    "\nLa cita ha sido reprogramada exitosamente, a continuacion mostramos sus datos: "
+                )
                 mostrarCita(citasAgendadas[indice])
                 break
             elif opc == "2":
@@ -534,8 +637,9 @@ def printCitasSinPagar():
     citasSinPagar = getCitasSinPagar()
 
     for i in range(len(citasSinPagar)):
-        print(f"{i+1}- Fecha: {citasSinPagar[i][0]} Paciente: {
-              citasSinPagar[i][1]} Tratamiento {citasSinPagar[i][3]}")
+        print(
+            f"{i+1}- Fecha: {citasSinPagar[i][0]} | Paciente: {citasSinPagar[i][1]} | Tratamiento {citasSinPagar[i][3]}"
+        )
 
 
 def getCitasSinPagar():
@@ -578,9 +682,25 @@ def buscarIndiceCita(fecha, paciente, tratamiento):
     return None
 
 
-#  * FUNCIONES PAGOS---------------------------------------------------------------------------------------------------------------------------
+def imprimirCitas():
+    if len(citasAgendadas) == 0:
+        print("\n\tNo hay citas agendadas\n")
+        input("\nPresione enter para continuar...")
+        return
 
-#  * Funciones Daniel-----------------------------------------------------------------------------------------------
+    for i in range(len(citasAgendadas)):
+        print(f"\tCita {i+1}")
+        print(f"Fecha: {citasAgendadas[i][0]}")
+        print(f"Paciente: {citasAgendadas[i][1]}")
+        print(f"Médico: {citasAgendadas[i][2]}")
+        print(f"Tratamiento: {citasAgendadas[i][3]}")
+        print(f"Pagada: {citasAgendadas[i][4]}")
+        if citasAgendadas[i][4]:
+            print(f"Método de pago: {citasAgendadas[i][5]}")
+        print("\n")
+
+
+#  * FUNCIONES PAGOS---------------------------------------------------------------------------------------------------------------------------
 def marcarCitaPagada(index, metodoPago):
     citasAgendadas[index][4] = True
     citasAgendadas[index].append(metodoPago)
@@ -605,7 +725,8 @@ def procesarPagos():
 
     while True:
         metodoDePago = int(
-            input("Por favor ingrese el método de pago con el que desea cancelar: "))
+            input("Por favor ingrese el método de pago con el que desea cancelar: ")
+        )
 
         if metodoDePago < 1 or metodoDePago > 3:
             print("\n-- OPCIÓN INCORECTA: Inténtelo denuevo --")
@@ -619,8 +740,7 @@ def procesarPagos():
     precioNeto = preciosTratamientos(tratamiento)
     precioFinal = calcularPrecioFinal(precioNeto, descuento)
 
-    marcarCitaPagada(buscarIndiceCita(
-        cita[0], cita[1], tratamiento), nombreMetodoPago)
+    marcarCitaPagada(buscarIndiceCita(cita[0], cita[1], tratamiento), nombreMetodoPago)
 
     print(citasAgendadas[buscarIndiceCita(cita[0], cita[1], tratamiento)])
     print("\nTransaccion completada con exito: \n")
@@ -679,6 +799,8 @@ def getNombreMetodoPago(metodo):
 
 def calcularPrecioFinal(precioNeto, descuento):
     return precioNeto - precioNeto * descuento
+
+
 # *-------------------------------------------------------------------------------------------------------------------------------------------
 
 # * Funciones Elena---------------------------------------------------------------------------------------------------------------------------
@@ -688,11 +810,13 @@ def generarFactura():
     # TODO: Avance 2 Módulo de Pagos - Facturación
     # ! Owner: Elena Gomez
     """
-    Se realiza la gestión de la factura, donde debe tomar en consideración la generación de un 
-    documento que simule una factura al paciente. Tome en consideración que debe llevar el siguiente detalle: 
-    Clínica  de  atención,  Especialidad,  Moneda,  Nombre  del  Paciente,  Servicio,  Cantidad,  Precio,  Detalle, 
+    Se realiza la gestión de la factura, donde debe tomar en consideración la generación de un
+    documento que simule una factura al paciente. Tome en consideración que debe llevar el siguiente detalle:
+    Clínica  de  atención,  Especialidad,  Moneda,  Nombre  del  Paciente,  Servicio,  Cantidad,  Precio,  Detalle,
     Subtotal, Descuento, IVA, Total General.
     """
+
+
 # *-------------------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -723,7 +847,9 @@ while True:
     # Solicito al usuario que elija una opción del menú, si se cumple (elige la opción) el programa continua.
     menu_option = input("\nSeleccione una opcion: ")
 
-    if menu_option == "1":  # ! Módulo de Expedientes -----------------------------------------------------------------------------
+    if (
+        menu_option == "1"
+    ):  # ! Módulo de Expedientes -----------------------------------------------------------------------------
 
         while True:
             # Solicito al usuario que elija una opción del menú, si se cumple (elige la opción) el programa continua.
@@ -749,13 +875,15 @@ while True:
             elif menu_option == "3":
                 # Lista de médicos
                 print(
-                    "A continuación se muestran los médicos del consultorio dental:\n")
+                    "A continuación se muestran los médicos del consultorio dental:\n"
+                )
                 mostrarTodosMedicos()
 
             elif menu_option == "4":
                 # Lista de pacientes ya registrados
                 print(
-                    "A continuación se muestran los pacientes del consultorio dental:\n")
+                    "A continuación se muestran los pacientes del consultorio dental:\n"
+                )
                 mostrarTodosPacientes()
 
             elif menu_option == "5":
@@ -766,13 +894,16 @@ while True:
                 # Si el usuario elige una opción incorrecta
                 print("\n-- OPCIÓN INCORECTA: Inténtelo denuevo -- ")
 
-    elif menu_option == "2":  # ! Módulo de Citas y Cancelación de Citas ----------------------------------------------------------
+    elif (
+        menu_option == "2"
+    ):  # ! Módulo de Citas y Cancelación de Citas ----------------------------------------------------------
         while True:
             # Solicito al usuario que elija una opción del menú, si se cumple (elige la opción) el programa continua.
             print("\n\t\t\tMODULO DE CITAS Y CANCELACIÓN DE CITAS")
             print("\t\t1- Registrar cita")
             print("\t\t2- Cancelar cita")
-            print("\t\t3- Regresar al MENÚ PRINCIPAL")
+            print("\t\t3- Ver citas agendadas")
+            print("\t\t4- Regresar al MENÚ PRINCIPAL")
 
             menu_option = input("\n\tSeleccione una opcion: ")
 
@@ -785,6 +916,11 @@ while True:
                 reprogramarCancelarCita()
 
             elif menu_option == "3":
+                # Si el usuario elige ver las citas agendadas
+                print("\n\tCITAS AGENDADAS\n")
+                imprimirCitas()
+
+            elif menu_option == "4":
                 # Si el usuario elige regresar al menú principal
                 break
 
@@ -792,7 +928,9 @@ while True:
                 # Si el usuario elige una opción incorrecta
                 print("\n-- OPCIÓN INCORECTA: Inténtelo denuevo -- ")
 
-    elif menu_option == "3":  # ! Módulo de Pagos ----------------------------------------------------------------------------------
+    elif (
+        menu_option == "3"
+    ):  # ! Módulo de Pagos ----------------------------------------------------------------------------------
         while True:
             # Solicito al usuario que elija una opción del menú, si se cumple (elige la opción) el programa continua.
             print("\n\t\t\tMODULO DE PAGOS")
@@ -817,14 +955,18 @@ while True:
             else:
                 # Si el usuario elige una opción incorrecta
                 print("\n-- OPCIÓN INCORECTA: Inténtelo denuevo -- ")
-        
+
         # TODO: Agregar funcionalidad de Módulo de Citas y Cancelación de Citas
         # !: Owners: Daniel Vindas y Elena Gomez
 
-    elif menu_option == "4":  # ! Módulo de Reportes -------------------------------------------------------------------------------
+    elif (
+        menu_option == "4"
+    ):  # ! Módulo de Reportes -------------------------------------------------------------------------------
         print("\n -- OPCIÓN AÚN EN DESARROLLO --")
 
-    elif menu_option == "5":  # ! Salir del programa -------------------------------------------------------------------------------
+    elif (
+        menu_option == "5"
+    ):  # ! Salir del programa -------------------------------------------------------------------------------
         print("\n -- CERRANDO PROGRAMA -- \n")
         break
 
