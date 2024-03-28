@@ -682,20 +682,62 @@ def calcularPrecioFinal(precioNeto, descuento):
 # *-------------------------------------------------------------------------------------------------------------------------------------------
 
 # * Funciones Elena---------------------------------------------------------------------------------------------------------------------------
+# Seleccionar una cita para generar la factura
+print("Seleccione una cita para generar la factura:")
+i = 1
+while i <= len(citasAgendadas):
+    cita = citasAgendadas[i - 1]
+    print(f"{i}. Fecha: {cita[0]}, Paciente: {cita[1]}")
+    i += 1
 
+opcion = None
+while opcion is None:
+    opcion_input = input("Seleccione una cita (por número). Ejemplo, 1, 2 ó 3: ")
+    try:
+        opcion = int(opcion_input)
+        if opcion < 1 or opcion > len(citasAgendadas):
+            print("Por favor, ingrese un número válido, considere que debe ser conforme a la cantidad de citas agendadas.")
+            opcion = None
+        else: #este else es en caso de que escriban una letra o algún símbolo
+        print("Por favor, ingrese un número válido, considere que debe ser conforme a la cantidad de citas agendadas.")
 
-def generarFactura():
-    # TODO: Avance 2 Módulo de Pagos - Facturación
-    # ! Owner: Elena Gomez                                                                                                                          pasa def aquí
-    """
-    Se realiza la gestión de la factura, donde debe tomar en consideración la generación de un 
-    documento que simule una factura al paciente. Tome en consideración que debe llevar el siguiente detalle: 
-    Clínica  de  atención,  Especialidad,  Moneda,  Nombre  del  Paciente,  Servicio,  Cantidad,  Precio,  Detalle, 
-    Subtotal, Descuento, IVA, Total General.
-    
-    """
+# detalles de la cita 
+cita_seleccionada = citasAgendadas[opcion - 1]
 
+# Detalles de la factura
+clinica = "Clìnica de Dientes" #preguntar
+especialidad = "Odontología" #preguntar
+moneda = "CRC" 
+paciente = cita_seleccionada[1]
+servicio = cita_seleccionada[3]  # Tratamiento
+precio = preciosTratamientos(servicio)
+cantidad = 1  # aquí no sé qué poner, así que asumiré que es una por mientras
+subtotal = precio * cantidad
+descuento = descuento_segun_MetodoPago(cita_seleccionada[6])
+iva = 0.13  # Impuesto de venta del 13%
+total_general = subtotal - (subtotal * descuento) + (subtotal * iva)
 
+# print de la factura
+print("\nFACTURA")
+print("-------")
+print(f"Clínica: {clinica}")
+print(f"Especialidad: {especialidad}")
+print(f"Moneda: {moneda}")
+print(f"Nombre del Paciente: {paciente}")
+print(f"Servicio: {servicio}")
+print(f"Cantidad: {cantidad}")
+print(f"Precio: {moneda} {precio}")
+print(f"Detalle: {servicio}")
+print(f"Subtotal: {moneda} {subtotal}")
+print(f"Descuento: {descuento*100}%")
+print(f"IVA: {iva*100}%")
+print(f"Total General: {moneda} {total_general}")
+
+# Marcar la cita como pagada
+cita_seleccionada[4] = True
+
+print("\n¡La factura ha sido generada exitosamente!")
+print("\n¡Gracias :)!")
 
 # *-------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -812,68 +854,11 @@ while True:
 
             elif menu_option == "2":
                 # Si el usuario elige Facturación
+                generarFactura()
 
-def generarFactura():
-    # Verifico
-    if len(citasAgendadas) == 0:
-        print("No existen citas para generar una factura :(.")
-        return
-
-    # Seleccionar una cita para generar la factura
-    print("Seleccione una cita para generar la factura:")
-    for i, cita in enumerate(citasAgendadas):
-        print(f"{i+1}. Fecha: {cita[0]}, Paciente: {cita[1]}")
-
-    while True:
-        try:
-            opcion = int(input("Seleccione una cita (por número). Ejemplo, 1, 2 ó 3: "))
-            if opcion < 1 or opcion > len(citasAgendadas):
-                raise ValueError
-            break
-        except ValueError:
-            print("Por favor, ingrese un número válido, considere que debe ser conforme a la cantidad de citas agendadas.")
-
-    # Obtener los detalles de la cita seleccionada
-    cita_seleccionada = citasAgendadas[opcion - 1]
-
-    # Detalles de la factura
-    clinica = "nombre" #preguntar
-    especialidad = "Odontología" #preguntar
-    moneda = "CRC" 
-    paciente = cita_seleccionada[1]
-    servicio = cita_seleccionada[3]  # Tratamiento
-    precio = preciosTratamientos(servicio)
-    cantidad = 1  # aquí no sé qué poner, así que asumiré que es una por mientras
-    subtotal = precio * cantidad
-    descuento = descuento_segun_MetodoPago(cita_seleccionada[6])
-    iva = 0.13  # Impuesto de venta del 13%
-    total_general = subtotal - (subtotal * descuento) + (subtotal * iva)
-
-    # print de la factura
-    print("\nFACTURA")
-    print("-------")
-    print(f"Clínica: {clinica}")
-    print(f"Especialidad: {especialidad}")
-    print(f"Moneda: {moneda}")
-    print(f"Nombre del Paciente: {paciente}")
-    print(f"Servicio: {servicio}")
-    print(f"Cantidad: {cantidad}")
-    print(f"Precio: {moneda} {precio}")
-    print(f"Detalle: {servicio}")
-    print(f"Subtotal: {moneda} {subtotal}")
-    print(f"Descuento: {descuento*100}%")
-    print(f"IVA: {iva*100}%")
-    print(f"Total General: {moneda} {total_general}")
-
-    # Marcar la cita como pagada
-    cita_seleccionada[4] = True
-
-    print("\n¡La factura ha sido generada exitosamente!")
-    print("\n¡Gracias :)!")
-
-    elif menu_option == "3":
+            elif menu_option == "3":
         # Si el usuario elige regresar al menú principal
-        break
+            break
 
     else:
         # Si el usuario elige una opción incorrecta
