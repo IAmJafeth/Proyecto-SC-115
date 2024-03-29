@@ -985,9 +985,7 @@ def generarFactura():
     precio = preciosTratamientos(servicio)
     cantidad = 1
     subtotal = precio * cantidad
-    print("Metodo de pago:", cita_seleccionada[5])
     descuento = descuento_segun_MetodoPago(cita_seleccionada[5])
-    print("Descuento:", descuento)
     iva = 0.13  # Impuesto de venta del 13%
     total_general = subtotal - (subtotal * descuento) + (subtotal * iva)
 
