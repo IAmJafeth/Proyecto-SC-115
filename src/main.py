@@ -42,6 +42,15 @@ def getNombreDia(index):
 
 
 def getNombreHorario(horario):
+    """
+    Retorna el nombre del horario según el código proporcionado.
+
+    Parámetros:
+    - horario (str): El código del horario. Puede ser "m" para mañana o "t" para tarde.
+
+    Retorna:
+    - str: El nombre del horario correspondiente al código proporcionado. Puede ser "Mañana" o "Tarde".
+    """
     return "Mañana" if horario == "m" else "Tarde"
 
 
@@ -328,6 +337,12 @@ def mostrarCita(cita):
 
 
 def menuTratamientos():
+    """
+    Muestra un menú de opciones de tratamientos y solicita al usuario que seleccione un tratamiento.
+
+    Returns:
+        int: La opción de tratamiento seleccionada.
+    """
     print(
         "╭━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╮"
     )
@@ -387,6 +402,15 @@ def menuTratamientos():
 
 
 def getNombreTratamiento(index):
+    """
+    Retorna el nombre del tratamiento correspondiente al índice dado.
+
+    Parámetros:
+    - index (int): El índice del tratamiento.
+
+    Retorna:
+    - str: El nombre del tratamiento correspondiente al índice dado.
+    """
     if index == 1:
         return "Limpieza dental"
     if index == 2:
@@ -642,15 +666,26 @@ def reprogramarCita(indice):
 
 
 def printCitasSinPagar():
+    """
+    Imprime las citas sin pagar en el siguiente formato:
+    {número de cita}- Fecha: {fecha} | Paciente: {nombre del paciente} | Tratamiento: {nombre del tratamiento}
+    """
+
     citasSinPagar = getCitasSinPagar()
 
     for i in range(len(citasSinPagar)):
         print(
-            f"{i+1}- Fecha: {citasSinPagar[i][0]} | Paciente: {citasSinPagar[i][1]} | Tratamiento {citasSinPagar[i][3]}"
+            f"{i+1}- Fecha: {citasSinPagar[i][0]} | Paciente: {citasSinPagar[i][1]} | Tratamiento: {citasSinPagar[i][3]}"
         )
 
 
 def getCitasSinPagar():
+    """
+    Obtiene una lista de citas agendadas que no han sido pagadas.
+
+    Returns:
+        list: Una lista de citas agendadas que no han sido pagadas.
+    """
     citasSinPagar = []
     for cita in citasAgendadas:
         if cita[4] == False:
@@ -658,8 +693,33 @@ def getCitasSinPagar():
     return citasSinPagar
 
 
-def seleccionarCitaAPagar():
+def getCitasPagadas():
+    """
+    Obtiene una lista de citas agendadas que no han sido pagadas.
 
+    Returns:
+        list: Una lista de citas agendadas que no han sido pagadas.
+    """
+    citasPagadas = []
+    for cita in citasAgendadas:
+        if cita[4] == True:
+            citasPagadas.append(cita)
+    return citasPagadas
+
+
+def seleccionarCitaAPagar():
+    """
+    Esta función permite al usuario seleccionar una cita para pagar.
+
+    La función obtiene la lista de citas sin pagar y verifica si hay citas disponibles.
+    Si no hay citas por pagar, se muestra un mensaje y se retorna None.
+    Si hay citas por pagar, se muestra la lista de citas y se solicita al usuario que seleccione una cita.
+    Se verifica que la opción seleccionada sea válida y se retorna la cita seleccionada.
+
+    Returns:
+        list: La cita seleccionada para pagar.
+
+    """
     citasSinPagar = getCitasSinPagar()
 
     if len(citasSinPagar) == 0:
@@ -682,6 +742,18 @@ def seleccionarCitaAPagar():
 
 
 def buscarIndiceCita(fecha, paciente, tratamiento):
+    """
+    Busca el índice de una cita en la lista de citas agendadas.
+
+    Parámetros:
+    - fecha (str): La fecha de la cita a buscar.
+    - paciente (str): El nombre del paciente de la cita a buscar.
+    - tratamiento (str): El nombre del tratamiento de la cita a buscar.
+
+    Retorna:
+    - int: El índice de la cita en la lista de citas agendadas, si se encuentra.
+    - None: Si la cita no se encuentra en la lista de citas agendadas.
+    """
     for i in range(len(citasAgendadas)):
         cita = citasAgendadas[i]
         if cita[0] == fecha and cita[1] == paciente and cita[3] == tratamiento:
@@ -691,6 +763,24 @@ def buscarIndiceCita(fecha, paciente, tratamiento):
 
 
 def imprimirCitas():
+    """
+    Imprime las citas agendadas en el siguiente formato:
+    - Cita [número de cita]
+    - Fecha: [fecha de la cita]
+    - Paciente: [nombre del paciente]
+    - Médico: [nombre del médico]
+    - Tratamiento: [nombre del tratamiento]
+    - Pagada: [estado de pago de la cita]
+    - Método de pago: [método de pago utilizado] (solo si la cita está pagada)
+
+    Si no hay citas agendadas, muestra un mensaje indicando que no hay citas y espera a que el usuario presione enter para continuar.
+
+    Parámetros:
+    Ninguno
+
+    Retorna:
+    Ninguno
+    """
     if len(citasAgendadas) == 0:
         print("\n\tNo hay citas agendadas\n")
         input("\nPresione enter para continuar...")
@@ -706,10 +796,20 @@ def imprimirCitas():
         if citasAgendadas[i][4]:
             print(f"Método de pago: {citasAgendadas[i][5]}")
         print("\n")
+    
+    input("Presione enter para continuar...")
 
 
 #  * FUNCIONES PAGOS---------------------------------------------------------------------------------------------------------------------------
 def marcarCitaPagada(index, metodoPago):
+    """
+    Marca una cita como pagada y registra el método de pago utilizado.
+
+    Parámetros:
+    - index (int): El índice de la cita en la lista de citas agendadas.
+    - metodoPago (str): El método de pago utilizado para pagar la cita.
+
+    """
     citasAgendadas[index][4] = True
     citasAgendadas[index].append(metodoPago)
 
@@ -761,6 +861,15 @@ def procesarPagos():
 
 
 def preciosTratamientos(tratamiento):
+    """
+    Devuelve el precio de un tratamiento dental dado su nombre.
+
+    Parámetros:
+    - tratamiento (str): El nombre del tratamiento dental.
+
+    Retorna:
+    - int: El precio del tratamiento.
+    """
     if tratamiento == "Limpieza dental":
         return 30_000
     elif tratamiento == "Puentes dentales":
@@ -788,6 +897,15 @@ def preciosTratamientos(tratamiento):
 
 
 def descuento_segun_MetodoPago(metodo):
+    """
+    Calcula el descuento según el método de pago seleccionado.
+
+    Parámetros:
+    - metodo: str, el método de pago seleccionado.
+
+    Retorna:
+    - float, el porcentaje de descuento correspondiente al método de pago.
+    """
     if metodo == "Efectivo":
         return 0.10
     elif metodo == "Transferencia Sinpe":
@@ -797,6 +915,15 @@ def descuento_segun_MetodoPago(metodo):
 
 
 def getNombreMetodoPago(metodo):
+    """
+    Devuelve el nombre del método de pago correspondiente al número proporcionado.
+
+    Parámetros:
+    - metodo: int. El número del método de pago.
+
+    Retorna:
+    - str. El nombre del método de pago correspondiente al número proporcionado.
+    """
     if metodo == 1:
         return "Efectivo"
     if metodo == 2:
@@ -806,6 +933,16 @@ def getNombreMetodoPago(metodo):
 
 
 def calcularPrecioFinal(precioNeto, descuento):
+    """
+    Calcula el precio final de un producto aplicando un descuento al precio neto.
+
+    Parámetros:
+    precioNeto (float): El precio neto del producto.
+    descuento (float): El porcentaje de descuento a aplicar.
+
+    Retorna:
+    float: El precio final del producto después de aplicar el descuento.
+    """
     return precioNeto - precioNeto * descuento
 
 
@@ -815,14 +952,66 @@ def calcularPrecioFinal(precioNeto, descuento):
 
 
 def generarFactura():
-    # TODO: Avance 2 Módulo de Pagos - Facturación
-    # ! Owner: Elena Gomez
-    """
-    Se realiza la gestión de la factura, donde debe tomar en consideración la generación de un
-    documento que simule una factura al paciente. Tome en consideración que debe llevar el siguiente detalle:
-    Clínica  de  atención,  Especialidad,  Moneda,  Nombre  del  Paciente,  Servicio,  Cantidad,  Precio,  Detalle,
-    Subtotal, Descuento, IVA, Total General.
-    """
+    citasPagadas = getCitasPagadas()
+    print("Seleccione una cita para generar la factura:")
+    i = 1
+    while i <= len(citasPagadas):
+        cita = citasPagadas[i - 1]
+        print(f"{i}. Fecha: {cita[0]}, Paciente: {cita[1]}")
+        i += 1
+
+    while True:
+
+        opcion = int(
+            input("Seleccione una cita (por número). Ejemplo, 1, 2 ó 3: ")
+        )  # devuelve un string
+
+        if opcion < 1 or opcion > len(citasPagadas):
+            print(
+                "Por favor, ingrese un número válido, considere que debe ser conforme a la cantidad de citas agendadas."
+            )
+        else:
+            break
+
+    # Obtener los detalles de la cita seleccionada
+    cita_seleccionada = citasPagadas[opcion - 1]
+
+    # Detalles de la factura
+    clinica = "Clínica de Dientes"  # creo jeje
+    especialidad = "Odontología"
+    moneda = "CRC"
+    paciente = cita_seleccionada[1]
+    servicio = cita_seleccionada[3]  # Tratamiento
+    precio = preciosTratamientos(servicio)
+    cantidad = 1
+    subtotal = precio * cantidad
+    print("Metodo de pago:", cita_seleccionada[5])
+    descuento = descuento_segun_MetodoPago(cita_seleccionada[5])
+    print("Descuento:", descuento)
+    iva = 0.13  # Impuesto de venta del 13%
+    total_general = subtotal - (subtotal * descuento) + (subtotal * iva)
+
+    # Imprimir la factura
+    print("\nFACTURA")
+    print("-------")
+    print(f"Clínica: {clinica}")
+    print(f"Especialidad: {especialidad}")
+    print(f"Moneda: {moneda}")
+    print(f"Nombre del Paciente: {paciente}")
+    print(f"Servicio: {servicio}")
+    print(f"Cantidad: {cantidad}")
+    print(f"Precio: {moneda} {precio}")
+    print(f"Detalle: {servicio}")
+    print(f"Subtotal: {moneda} {subtotal}")
+    print(f"Descuento: {descuento*100}%")
+    print(f"IVA: {iva*100}%")
+    print(f"Total General: {moneda} {total_general}")
+
+    # Marcar la cita como pagada
+    cita_seleccionada[4] = True
+
+    print("\n¡Factura generada exitosamente!")
+    input("\nPresione enter para continuar...")
 
 
 # *-------------------------------------------------------------------------------------------------------------------------------------------
@@ -838,6 +1027,48 @@ pacientes = []
 # 'citas' es una lista que almacena la información de todas las citas. Cada cita se representa como una lista de sus detalles.
 citasAgendadas = []
 
+medicos.append(
+    [
+        "Jafeth Garro",
+        "Odontologo",
+        "jafeth@garro.com",
+        "1234567890",
+        [
+            "Trabaja",
+            "Trabaja",
+            "Trabaja",
+            "Trabaja",
+            "Trabaja",
+            "No Trabaja",
+            "No Trabaja",
+        ],
+        "m",
+    ]
+)
+pacientes.append(
+    ["Elena Gomez", "elena@gomez.com", "123 Main St", "1234567890", "Jafeth Garro"]
+)
+
+citasAgendadas.append(
+    [
+        "2/1",
+        "Elena Gomez",
+        "Jafeth Garro",
+        "Limpieza dental",
+        True,
+        "Tarjeta débito/credito",
+    ]
+)
+
+citasAgendadas.append(
+    [
+        "1/1",
+        "Alice Johnson",
+        "Dr. John Doe",
+        "Cirugía reconstructiva de mandíbula y maxilar",
+        False,
+    ]
+)
 
 # * PROGRAMA PRINCIPAL ------------------------------------------------------------------------------------------------------------------------
 print(presentacion)
@@ -978,7 +1209,7 @@ while True:
 
             elif menu_option == "2":
                 # Si el usuario elige Facturación
-                print("\n -- OPCIÓN AÚN EN DESARROLLO --")
+                generarFactura()
 
             elif menu_option == "3":
                 # Si el usuario elige regresar al menú principal

@@ -118,10 +118,10 @@ Cada cita se almacena en una lista siguiendo la estructura:
 > -   **Doctor**: Dr. Jane Doe
 > -   **Procedimiento**: Limpieza dental
 > -   **Pagado**: True
-> -   **Método de Pago**: Tarjeta de Crédito
+> -   **Método de Pago**: Tarjeta débito/credito
 >
 > ```python
-> ["2/1", "Bob Smith", "Dr. Jane Doe", "Limpieza dental", True, "Tarjeta de Crédito"]
+> ["2/1", "Bob Smith", "Dr. Jane Doe", "Limpieza dental", True, "Tarjeta débito/credito"]
 > ```
 
 ### Nota
