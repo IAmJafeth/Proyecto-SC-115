@@ -796,7 +796,7 @@ def imprimirCitas():
         if citasAgendadas[i][4]:
             print(f"Método de pago: {citasAgendadas[i][5]}")
         print("\n")
-    
+
     input("Presione enter para continuar...")
 
 
