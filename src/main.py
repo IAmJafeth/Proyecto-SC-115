@@ -953,7 +953,7 @@ def calcularPrecioFinal(precioNeto, descuento):
 
 def generarFactura():
     citasPagadas = getCitasPagadas()
-    print("Seleccione una cita para generar la factura:")
+    print("\nSeleccione una cita para generar la factura:\n")
     i = 1
     while i <= len(citasPagadas):
         cita = citasPagadas[i - 1]
@@ -963,7 +963,7 @@ def generarFactura():
     while True:
 
         opcion = int(
-            input("Seleccione una cita (por número). Ejemplo, 1, 2 ó 3: ")
+            input("\nSeleccione una cita (por número). Ejemplo, 1, 2 ó 3: ")
         )  # devuelve un string
 
         if opcion < 1 or opcion > len(citasPagadas):
@@ -990,20 +990,28 @@ def generarFactura():
     total_general = subtotal - (subtotal * descuento) + (subtotal * iva)
 
     # Imprimir la factura
-    print("\nFACTURA")
-    print("-------")
+    print("\n" + "=" * 40)
+    print("FACTURA".center(40))
+    print("=" * 40)
     print(f"Clínica: {clinica}")
     print(f"Especialidad: {especialidad}")
     print(f"Moneda: {moneda}")
     print(f"Nombre del Paciente: {paciente}")
-    print(f"Servicio: {servicio}")
-    print(f"Cantidad: {cantidad}")
-    print(f"Precio: {moneda} {precio}")
+    print("-" * 40)
+    print("Servicios:")
+    print(f" - Servicio: {servicio}")
+    print(f" - Cantidad: {cantidad}")
+    print(f" - Precio: {moneda} {precio}")
+    print("-" * 40)
     print(f"Detalle: {servicio}")
-    print(f"Subtotal: {moneda} {subtotal}")
-    print(f"Descuento: {descuento*100}%")
-    print(f"IVA: {iva*100}%")
+    print("-" * 40)
+    print("Resumen:")
+    print(f" - Subtotal: {moneda} {subtotal}")
+    print(f" - Descuento: {descuento*100}%")
+    print(f" - IVA: {iva*100}%")
+    print("-" * 40)
     print(f"Total General: {moneda} {total_general}")
+    print("=" * 40)
 
     # Marcar la cita como pagada
     cita_seleccionada[4] = True
