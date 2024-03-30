@@ -330,10 +330,14 @@ def mostrarCita(cita):
             - Nombre del médico (str)
             - Tratamiento (str)
     """
-    print(f"Fecha: {cita[0]}")
-    print(f"Paciente: {cita[1]}")
-    print(f"Médico: {cita[2]}")
-    print(f"Tratamiento: {cita[3]}\n")
+    print(f"Fecha: {getFechaCita(cita)}")
+    print(f"Paciente: {cita[2]}")
+    print(f"Médico: {cita[3]}")
+    print(f"Tratamiento: {cita[4]}")
+    print(f"Estado de Pago: {"Pagada" if cita[5] else "No Pagada"}")
+    if cita[5]:
+        print(f"Método de pago: {cita[6]}")
+    print("\n")
 
 
 def menuTratamientos():
@@ -436,6 +440,12 @@ def getNombreTratamiento(index):
     if index == 12:
         return "Cirugía reconstructiva de mandíbula y maxilar"
 
+def getFechaCita(cita):
+    return cita[1][len(cita[1])-1]
+
+def setFechaCita(cita, fecha):
+    cita[1].append(fecha)
+
 
 def registrarCita():
     """
@@ -460,6 +470,8 @@ def registrarCita():
     while True:
         cita = []
 
+        cita.append(True)
+
         while True:
             print("Seleccione el mes de la cita")
             mes = int(input("Mes (1-12): "))
@@ -477,7 +489,7 @@ def registrarCita():
                 continue
             break
         fecha = f"{dia}/{mes}"
-        cita.append(fecha)
+        cita.append([fecha])
 
         while True:
             print("\nSeleccione al paciente")
@@ -496,7 +508,7 @@ def registrarCita():
             medicosDisponibles = []
             for medico in medicos:
                 for citaAgendada in citasAgendadas:
-                    if citaAgendada[0] == fecha and citaAgendada[2] == medico[0]:
+                    if getFechaCita(citaAgendada) == fecha and citaAgendada[2] == medico[0]:
                         count += 1
                         break
                 else:
@@ -544,6 +556,7 @@ def reprogramarCancelarCita():
         None
     """
     encontrado = False
+    citas = getCitasActivas()
 
     print("\nREPROGRAMACION/CANCELACION DE CITAS")
     if len(pacientes) == 0 or len(medicos) == 0:
@@ -555,7 +568,6 @@ def reprogramarCancelarCita():
         return
 
     while True:
-        indice = 0
         while True:
             print("Seleccione el mes de la cita")
             mes = int(input("Mes (1-12): "))
@@ -573,32 +585,42 @@ def reprogramarCancelarCita():
                 continue
             break
         fecha = f"{dia}/{mes}"
-        for c in citasAgendadas:
-            if c[0] == fecha:
+        for c in citas:
+
+            if getFechaCita(c) == fecha:
                 print("\nSe ha encontrado la cita, los datos actuales son:\n")
                 mostrarCita(c)
                 encontrado = True
+                indice = buscarIndiceCita(fecha, c[2], c[4])
                 break
-            indice += 1
+
+
         if encontrado == False:
             print("\nNo se ha encontrado una cita en esa fecha")
             input("\nPresione enter para continuar...")
             return
-        print("¿\nDesea reagendar o cancelar la cita?")
-        print("1. Reagendar cita")
-        print("2. Cancelar cita")
-        print("3. Salir")
-        opcion = input("\nSelecione una opcion ")
-        if opcion == "1":
-            reprogramarCita(indice)
-        elif opcion == "2":
-            citasAgendadas.pop(indice)
-            print("\nLa cita ha sido cancelada")
-        elif opcion == "3":
-            print("\nRegresando al menu principal")
-            return
-        else:
-            print("Ingrese una opcion valida")
+        
+        while True:
+            print("¿Desea reagendar o cancelar la cita?\n")
+            print("1. Reagendar cita")
+            print("2. Cancelar cita")
+            print("3. Salir")
+
+            opcion = input("\nSelecione una opcion ")
+
+            if opcion == "1":
+                reprogramarCita(indice)
+                break
+            elif opcion == "2":
+                citasAgendadas[indice][0] = False
+                print("\nLa cita ha sido cancelada")
+                break
+            elif opcion == "3":
+                print("\nRegresando al menu principal")
+                return
+            else:
+                print("Ingrese una opcion valida")
+
         input("\nPresione enter para continuar...")
         break
 
@@ -613,7 +635,7 @@ def reprogramarCita(indice):
     Retorna:
     None
     """
-    indiceTemporal = 0
+    citas = getCitasActivas()
     encontrado = False
     print("\nReprogramar cita")
     while True:
@@ -632,9 +654,9 @@ def reprogramarCita(indice):
             continue
         break
     fecha = f"{dia}/{mes}"
-    for cita in citasAgendadas:
-        if cita[0] == fecha and (
-            cita[2] == citasAgendadas[indice][2] or cita[3] == citasAgendadas[indice][3]
+    for cita in citas:
+        if getFechaCita(cita) == fecha and (
+            cita[3] == citasAgendadas[indice][3] or cita[4] == citasAgendadas[indice][4]
         ):
             encontrado = True
             break
@@ -651,7 +673,7 @@ def reprogramarCita(indice):
             print("2. Cancelar reprogramacion")
             opc = input("\nSeleccione una opcion ")
             if opc == "1":
-                citasAgendadas[indice][0] = fecha
+                setFechaCita(citasAgendadas[indice], fecha)
                 print(
                     "\nLa cita ha sido reprogramada exitosamente, a continuacion mostramos sus datos: "
                 )
@@ -664,7 +686,6 @@ def reprogramarCita(indice):
                 print("Ingrese una opcion valida")
                 continue
 
-
 def printCitasSinPagar():
     """
     Imprime las citas sin pagar en el siguiente formato:
@@ -675,9 +696,8 @@ def printCitasSinPagar():
 
     for i in range(len(citasSinPagar)):
         print(
-            f"{i+1}- Fecha: {citasSinPagar[i][0]} | Paciente: {citasSinPagar[i][1]} | Tratamiento: {citasSinPagar[i][3]}"
+            f"{i+1}- Fecha: {getFechaCita(citasSinPagar[i])} | Paciente: {citasSinPagar[i][2]} | Tratamiento: {citasSinPagar[i][4]}"
         )
-
 
 def getCitasSinPagar():
     """
@@ -686,9 +706,10 @@ def getCitasSinPagar():
     Returns:
         list: Una lista de citas agendadas que no han sido pagadas.
     """
+    citas = getCitasActivas()
     citasSinPagar = []
-    for cita in citasAgendadas:
-        if cita[4] == False:
+    for cita in citas:
+        if cita[5] == False:
             citasSinPagar.append(cita)
     return citasSinPagar
 
@@ -700,12 +721,26 @@ def getCitasPagadas():
     Returns:
         list: Una lista de citas agendadas que no han sido pagadas.
     """
+    citas = getCitasActivas()
+
     citasPagadas = []
-    for cita in citasAgendadas:
-        if cita[4] == True:
+    for cita in citas:
+        if cita[5] == True:
             citasPagadas.append(cita)
     return citasPagadas
 
+def getCitasActivas():
+    """
+    Obtiene una lista de citas agendadas que no han sido pagadas.
+
+    Returns:
+        list: Una lista de citas agendadas que no han sido pagadas.
+    """
+    citasActivas = []
+    for cita in citasAgendadas:
+        if cita[0] == True:
+            citasActivas.append(cita)
+    return citasActivas
 
 def seleccionarCitaAPagar():
     """
@@ -740,7 +775,6 @@ def seleccionarCitaAPagar():
 
     return citasSinPagar[index]
 
-
 def buscarIndiceCita(fecha, paciente, tratamiento):
     """
     Busca el índice de una cita en la lista de citas agendadas.
@@ -756,11 +790,10 @@ def buscarIndiceCita(fecha, paciente, tratamiento):
     """
     for i in range(len(citasAgendadas)):
         cita = citasAgendadas[i]
-        if cita[0] == fecha and cita[1] == paciente and cita[3] == tratamiento:
+        if getFechaCita(cita) == fecha and cita[2] == paciente and cita[4] == tratamiento:
             return i
 
     return None
-
 
 def imprimirCitas():
     """
@@ -781,26 +814,20 @@ def imprimirCitas():
     Retorna:
     Ninguno
     """
-    if len(citasAgendadas) == 0:
+    citas = getCitasActivas()
+    if len(citas) == 0:
         print("\n\tNo hay citas agendadas\n")
         input("\nPresione enter para continuar...")
         return
 
-    for i in range(len(citasAgendadas)):
+    for i in range(len(citas)):
         print(f"\tCita {i+1}")
-        print(f"Fecha: {citasAgendadas[i][0]}")
-        print(f"Paciente: {citasAgendadas[i][1]}")
-        print(f"Médico: {citasAgendadas[i][2]}")
-        print(f"Tratamiento: {citasAgendadas[i][3]}")
-        print(f"Pagada: {citasAgendadas[i][4]}")
-        if citasAgendadas[i][4]:
-            print(f"Método de pago: {citasAgendadas[i][5]}")
-        print("\n")
+        mostrarCita(citas[i])
 
     input("Presione enter para continuar...")
 
-
 #  * FUNCIONES PAGOS---------------------------------------------------------------------------------------------------------------------------
+    
 def marcarCitaPagada(index, metodoPago):
     """
     Marca una cita como pagada y registra el método de pago utilizado.
@@ -810,9 +837,8 @@ def marcarCitaPagada(index, metodoPago):
     - metodoPago (str): El método de pago utilizado para pagar la cita.
 
     """
-    citasAgendadas[index][4] = True
+    citasAgendadas[index][5] = True
     citasAgendadas[index].append(metodoPago)
-
 
 def procesarPagos():
 
@@ -844,13 +870,11 @@ def procesarPagos():
 
     nombreMetodoPago = getNombreMetodoPago(metodoDePago)
     descuento = descuento_segun_MetodoPago(nombreMetodoPago)
-    tratamiento = cita[3]
+    tratamiento = cita[4]
     precioNeto = preciosTratamientos(tratamiento)
     precioFinal = calcularPrecioFinal(precioNeto, descuento)
 
-    marcarCitaPagada(buscarIndiceCita(cita[0], cita[1], tratamiento), nombreMetodoPago)
-
-    print(citasAgendadas[buscarIndiceCita(cita[0], cita[1], tratamiento)])
+    marcarCitaPagada(buscarIndiceCita(getFechaCita(cita), cita[2], tratamiento), nombreMetodoPago)
     print("\nTransaccion completada con exito: \n")
     print(f"Tratamiento:\t{tratamiento}")
     print(f"Metodo de Pago:\t{nombreMetodoPago}")
@@ -858,7 +882,6 @@ def procesarPagos():
     print(f"Descuento:\t{descuento*100}%")
     print(f"Precio Final:\t{precioFinal}")
     input("\nPresione enter para continuar...")
-
 
 def preciosTratamientos(tratamiento):
     """
@@ -895,7 +918,6 @@ def preciosTratamientos(tratamiento):
     elif tratamiento == "Cirugía reconstructiva de mandíbula y maxilar":
         return 500_000
 
-
 def descuento_segun_MetodoPago(metodo):
     """
     Calcula el descuento según el método de pago seleccionado.
@@ -912,7 +934,6 @@ def descuento_segun_MetodoPago(metodo):
         return 0.30
     elif metodo == "Tarjeta débito/credito":
         return 0.05
-
 
 def getNombreMetodoPago(metodo):
     """
@@ -931,7 +952,6 @@ def getNombreMetodoPago(metodo):
     if metodo == 3:
         return "Tarjeta débito/credito"
 
-
 def calcularPrecioFinal(precioNeto, descuento):
     """
     Calcula el precio final de un producto aplicando un descuento al precio neto.
@@ -945,19 +965,13 @@ def calcularPrecioFinal(precioNeto, descuento):
     """
     return precioNeto - precioNeto * descuento
 
-
-# *-------------------------------------------------------------------------------------------------------------------------------------------
-
-# * Funciones Elena---------------------------------------------------------------------------------------------------------------------------
-
-
 def generarFactura():
     citasPagadas = getCitasPagadas()
     print("\nSeleccione una cita para generar la factura:\n")
     i = 1
     while i <= len(citasPagadas):
         cita = citasPagadas[i - 1]
-        print(f"{i}. Fecha: {cita[0]}, Paciente: {cita[1]}")
+        print(f"{i}. Fecha: {getFechaCita(cita)}, Paciente: {cita[2]}")
         i += 1
 
     while True:
@@ -980,12 +994,12 @@ def generarFactura():
     clinica = "Clínica de Dientes"  # creo jeje
     especialidad = "Odontología"
     moneda = "CRC"
-    paciente = cita_seleccionada[1]
-    servicio = cita_seleccionada[3]  # Tratamiento
+    paciente = cita_seleccionada[2]
+    servicio = cita_seleccionada[4]  # Tratamiento
     precio = preciosTratamientos(servicio)
     cantidad = 1
     subtotal = precio * cantidad
-    descuento = descuento_segun_MetodoPago(cita_seleccionada[5])
+    descuento = descuento_segun_MetodoPago(cita_seleccionada[6])
     iva = 0.13  # Impuesto de venta del 13%
     total_general = subtotal - (subtotal * descuento) + (subtotal * iva)
 
@@ -1019,8 +1033,143 @@ def generarFactura():
     print("\n¡Factura generada exitosamente!")
     input("\nPresione enter para continuar...")
 
+# * FUNCIONES REPORTES------------------------------------------------------------------------------------------------------------------------
+    
+def mostrarReportes():
+    """
+    Muestra un menú con las opciones de reportes disponibles.
 
-# *-------------------------------------------------------------------------------------------------------------------------------------------
+    Parámetros:
+    Ninguno
+
+    Retorna:
+    Ninguno
+    """
+    while True:
+        print("╭━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╮")
+        print("│               **REPORTES**                          │")
+        print("├─────────────────────────────────────────────────────┤")
+        print("│Opciones:                                            │")
+        print("├─────────────────────────────────────────────────────┤")
+        print("│ /// 1- Reporte de citas                             │")
+        print("│ /// 2- Reporte de pacientes                         │")
+        print("│ /// 3- Reporte de médicos                           │")
+        print("│ /// 4- Reporte de Tratamiento                       │")
+        print("├─────────────────────────────────────────────────────┤")
+        print("│ /// 5- Regresar al menú principal                   │")
+        print("╰━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╯")
+
+
+        opcion = input("\nSeleccione una opción: ")
+
+        if opcion == "1":
+            generarReporteCitas()
+            input("\nPresione enter para continuar...")
+        elif opcion == "2":
+            generarReportePacientes()
+        elif opcion == "3":
+            generarReporteMedicos()
+        elif opcion == "4":
+            print(f"\n{generarReporteTratamientos()}\n")
+            input("\nPresione enter para continuar...")
+        elif opcion == "5":
+            break
+        else:
+            print("Opción incorrecta, intente de nuevo")
+            continue
+
+def mostrarCambiosDeHorarioCita(cita):
+    """
+    Muestra los cambios de horario de una cita.
+
+    Parámetros:
+    - cita (list): Una lista que contiene la información de la cita.
+
+    Retorna:
+    Ninguno
+    """
+    if len(cita[1]) == 1:
+        print("No hay cambios de horario de la cita")
+        return
+    
+    print(f"\tCambios de horario de la cita")
+    for i in range(1, len(cita[1])):
+        print(f"\t{i}. {cita[1][i]}")
+
+def generarReporteCitas():
+    """
+    Genera un reporte de citas agendadas.
+
+    Parámetros:
+    Ninguno
+
+    Retorna:
+    Ninguno
+    """
+    print("\n\tREPORTE DE CITAS AGENDADAS\n")
+
+    if len(citasAgendadas) == 0:
+        print("No hay citas agendadas")
+        input("\nPresione enter para continuar...")
+        return
+
+    for i in range(len(citasAgendadas)):
+        print(f"\n\tCita {i+1}")
+        print(f"Estado: {'Activada' if citasAgendadas[i][0] else 'Cancelada'}")
+        mostrarCita(citasAgendadas[i])
+        mostrarCambiosDeHorarioCita(citasAgendadas[i])
+
+def generarReportePacientes():
+    """
+    Genera un reporte de pacientes registrados.
+
+    Parámetros:
+    Ninguno
+
+    Retorna:
+    Ninguno
+    """
+
+    print("\n\tREPORTE DE PACIENTES REGISTRADOS\n")
+
+    if len(pacientes) == 0:
+        print("No hay pacientes registrados")
+        input("\nPresione enter para continuar...")
+        return
+    
+    for i in range(len(pacientes)):
+        mostrarPaciente(pacientes[i])
+    
+    input("\nPresione enter para continuar...")
+
+def generarReporteMedicos():
+    """
+    Genera un reporte de médicos registrados.
+
+    Parámetros:
+    Ninguno
+
+    Retorna:
+    Ninguno
+    """
+
+    print("\n\tREPORTE DE MÉDICOS REGISTRADOS\n")
+
+    if len(medicos) == 0:
+        print("No hay médicos registrados")
+        input("\nPresione enter para continuar...")
+        return
+    
+    for i in range(len(medicos)):
+        mostrarMedico(medicos[i])
+    
+    input("\nPresione enter para continuar...")
+
+def generarReporteTratamientos():
+    reporte = "Reporte de Tratamientos Dentales:\n"
+    for tratamiento, precio in tratamientos_y_precios:
+        reporte += f"- {tratamiento}: {precio:,} colones\n"
+    return reporte
 
 
 # * VARIABLES --------------------------------------------------------------------------------------------------------------------------------
@@ -1032,6 +1181,27 @@ pacientes = []
 
 # 'citas' es una lista que almacena la información de todas las citas. Cada cita se representa como una lista de sus detalles.
 citasAgendadas = []
+
+# Lista de tratamientos y precios
+tratamientos_y_precios = [
+    ["Limpieza dental", 30_000],
+    ["Puentes dentales", 150_000],
+    ["Extracción dental", 40_000],
+    ["Restauración dental", 60_000],
+    ["Blanqueamiento dental", 50_000],
+    ["Carillas de porcelana", 80_000],
+    ["Tratamiento de caries", 25_000],
+    ["Colocación de brackets", 200_000],
+    ["Tratamiento de gingivitis", 35_000],
+    ["Colocación de retenedores", 60_000],
+    ["Tratamiento de lesiones faciales", 300_000],
+    ["Cirugía reconstructiva de mandíbula y maxilar", 500_000]
+]
+
+tratamientos_y_precios
+
+
+# * Datos de prueba
 
 medicos.append(
     [
@@ -1051,13 +1221,15 @@ medicos.append(
         "m",
     ]
 )
+
 pacientes.append(
     ["Elena Gomez", "elena@gomez.com", "123 Main St", "1234567890", "Jafeth Garro"]
 )
 
 citasAgendadas.append(
     [
-        "2/1",
+        True,
+        ["2/1"],
         "Elena Gomez",
         "Jafeth Garro",
         "Limpieza dental",
@@ -1068,7 +1240,8 @@ citasAgendadas.append(
 
 citasAgendadas.append(
     [
-        "1/1",
+        True,
+        ["1/1"],
         "Alice Johnson",
         "Dr. John Doe",
         "Cirugía reconstructiva de mandíbula y maxilar",
@@ -1225,13 +1398,10 @@ while True:
                 # Si el usuario elige una opción incorrecta
                 print("\n-- OPCIÓN INCORECTA: Inténtelo denuevo -- ")
 
-        # TODO: Agregar funcionalidad de Módulo de Citas y Cancelación de Citas
-        # !: Owners: Daniel Vindas y Elena Gomez
-
     elif (
         menu_option == "4"
     ):  # ! Módulo de Reportes -------------------------------------------------------------------------------
-        print("\n -- OPCIÓN AÚN EN DESARROLLO --")
+        mostrarReportes()
 
     elif (
         menu_option == "5"
