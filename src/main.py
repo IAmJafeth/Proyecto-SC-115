@@ -6,7 +6,6 @@ Curso:          Programación Básica
 Profesora:      SABORIO OVIEDO MARIA LAURA
 
 Estudiantes:    Jafeth Garro Roldán
-                Daniela Elena Gómez Mora
                 Aldo Mora Aguilar
                 Daniel Vindas Morraz
 
@@ -84,7 +83,7 @@ def crearSemanaDeTrabajo():
             break
 
         if dia < 1 or dia > 7:
-            print("\n-- OPCIÓN INCORECTA: Inténtelo denuevo -- ")
+            print("\n-- OPCIÓN INCORRECTA: Inténtelo de nuevo -- ")
             continue
 
         dias[dia - 1] = "Trabaja"
@@ -161,7 +160,7 @@ def crearMedico():
         )
         if horario == "m" or horario == "t":
             break
-        print("\n-- OPCIÓN INCORECTA: Inténtelo denuevo -- ")
+        print("\n-- OPCIÓN INCORRECTA: Inténtelo de nuevo -- ")
     medico.append(horario)
     medicos.append(medico)
 
@@ -476,7 +475,7 @@ def registrarCita():
             print("Seleccione el mes de la cita")
             mes = int(input("Mes (1-12): "))
             if mes < 1 or mes > 12:
-                print("\n-- OPCIÓN INCORECTA: Inténtelo denuevo -- ")
+                print("\n-- OPCIÓN INCORRECTA: Inténtelo de nuevo -- ")
                 continue
             break
         dias = getDiasDelMes(mes)
@@ -485,7 +484,7 @@ def registrarCita():
             print("Seleccione el día de la cita")
             dia = int(input(f"Día (1-{dias}): "))
             if dia < 1 or dia > dias:
-                print("\n-- OPCIÓN INCORECTA: Inténtelo denuevo -- ")
+                print("\n-- OPCIÓN INCORRECTA: Inténtelo de nuevo -- ")
                 continue
             break
         fecha = f"{dia}/{mes}"
@@ -558,7 +557,7 @@ def reprogramarCancelarCita():
     encontrado = False
     citas = getCitasActivas()
 
-    print("\nREPROGRAMACION/CANCELACION DE CITAS")
+    print("\nREPROGRAMACIÓN/CANCELACIÓN DE CITAS")
     if len(pacientes) == 0 or len(medicos) == 0:
         print("\n\tNo hay pacientes o médicos registrados\n")
         print(
@@ -572,7 +571,7 @@ def reprogramarCancelarCita():
             print("Seleccione el mes de la cita")
             mes = int(input("Mes (1-12): "))
             if mes < 1 or mes > 12:
-                print("\n-- OPCIÓN INCORECTA: Inténtelo denuevo -- ")
+                print("\n-- OPCIÓN INCORRECTA: Inténtelo de nuevo -- ")
                 continue
             break
         dias = getDiasDelMes(mes)
@@ -581,7 +580,7 @@ def reprogramarCancelarCita():
             print("Seleccione el día de la cita")
             dia = int(input(f"Día (1-{dias}): "))
             if dia < 1 or dia > dias:
-                print("\n-- OPCIÓN INCORECTA: Inténtelo denuevo -- ")
+                print("\n-- OPCIÓN INCORRECTA: Inténtelo de nuevo -- ")
                 continue
             break
         fecha = f"{dia}/{mes}"
@@ -642,7 +641,7 @@ def reprogramarCita(indice):
         print("Seleccione el nuevo mes de la cita")
         mes = int(input("Mes (1-12): "))
         if mes < 1 or mes > 12:
-            print("\n-- OPCIÓN INCORECTA: Inténtelo denuevo -- ")
+            print("\n-- OPCIÓN INCORRECTA: Inténtelo de nuevo -- ")
             continue
         break
     dias = getDiasDelMes(mes)
@@ -650,7 +649,7 @@ def reprogramarCita(indice):
         print("Seleccione el día de la cita")
         dia = int(input(f"Día (1-{dias}): "))
         if dia < 1 or dia > dias:
-            print("\n-- OPCIÓN INCORECTA: Inténtelo denuevo -- ")
+            print("\n-- OPCIÓN INCORRECTA: Inténtelo de nuevo -- ")
             continue
         break
     fecha = f"{dia}/{mes}"
@@ -769,7 +768,7 @@ def seleccionarCitaAPagar():
         index = int(input("\nSeleccione una cita: ")) - 1
 
         if index < 0 or index >= len(citasSinPagar):
-            print("\n-- OPCIÓN INCORECTA: Inténtelo denuevo --")
+            print("\n-- OPCIÓN INCORRECTA: Inténtelo de nuevo --")
             continue
         break
 
@@ -854,7 +853,7 @@ def procesarPagos():
     print("├─────────────────────────────────────────────────────┤")
     print("│ /// 1. Pago en efectivo                             │")
     print("│ /// 2. Pago Por Transferencia Sinpe                 │")
-    print("│ /// 3. Pago por tarjeta de credito/débito           │")
+    print("│ /// 3. Pago por tarjeta de crédito/débito           │")
     print("╰━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╯")
 
     while True:
@@ -863,7 +862,7 @@ def procesarPagos():
         )
 
         if metodoDePago < 1 or metodoDePago > 3:
-            print("\n-- OPCIÓN INCORECTA: Inténtelo denuevo --")
+            print("\n-- OPCIÓN INCORRECTA: Inténtelo de nuevo --")
             continue
 
         break
@@ -932,7 +931,7 @@ def descuento_segun_MetodoPago(metodo):
         return 0.10
     elif metodo == "Transferencia Sinpe":
         return 0.30
-    elif metodo == "Tarjeta débito/credito":
+    elif metodo == "Tarjeta débito/crédito":
         return 0.05
 
 def getNombreMetodoPago(metodo):
@@ -950,7 +949,7 @@ def getNombreMetodoPago(metodo):
     if metodo == 2:
         return "Transferencia Sinpe"
     if metodo == 3:
-        return "Tarjeta débito/credito"
+        return "Tarjeta débito/crédito"
 
 def calcularPrecioFinal(precioNeto, descuento):
     """
@@ -1234,7 +1233,7 @@ citasAgendadas.append(
         "Jafeth Garro",
         "Limpieza dental",
         True,
-        "Tarjeta débito/credito",
+        "Tarjeta débito/crédito",
     ]
 )
 
@@ -1322,7 +1321,7 @@ while True:
 
             else:
                 # Si el usuario elige una opción incorrecta
-                print("\n-- OPCIÓN INCORECTA: Inténtelo denuevo -- ")
+                print("\n-- OPCIÓN INCORRECTA: Inténtelo de nuevo -- ")
 
     elif (
         menu_option == "2"
@@ -1362,7 +1361,7 @@ while True:
 
             else:
                 # Si el usuario elige una opción incorrecta
-                print("\n-- OPCIÓN INCORECTA: Inténtelo denuevo -- ")
+                print("\n-- OPCIÓN INCORRECTA: Inténtelo de nuevo -- ")
 
     elif (
         menu_option == "3"
@@ -1396,7 +1395,7 @@ while True:
 
             else:
                 # Si el usuario elige una opción incorrecta
-                print("\n-- OPCIÓN INCORECTA: Inténtelo denuevo -- ")
+                print("\n-- OPCIÓN INCORRECTA: Inténtelo de nuevo -- ")
 
     elif (
         menu_option == "4"
@@ -1410,4 +1409,4 @@ while True:
         break
 
     else:  # ! Opción incorrecta
-        print("\n-- OPCIÓN INCORECTA: Inténtelo denuevo -- ")
+        print("\n-- OPCIÓN INCORRECTA: Inténtelo de nuevo -- ")
