@@ -1346,7 +1346,7 @@ def crearArchivos():
     Retorna:
     - None
     """
-    open("pacientes.txt", "a").close()
+    open("medicos.txt", "a").close()
     open("citas.txt", "a").close()
     open("pacientes.txt", "a").close()
 
