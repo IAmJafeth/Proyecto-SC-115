@@ -163,6 +163,14 @@ def seleccionarEspecialidadMedico():
             input("\n-- OPCIÓN INCORRECTA: Inténtelo de nuevo -- \nPresione enter para continuar...")
 
 def guardarMedico(medico:list):
+    """ 
+    Función que guarda un médico en el archivo medicos.txt
+    
+    Parámetros:
+    - medico (list): Lista que contiene la información del médico a guardar en el archivo medicos.txt
+    
+    Retorna:
+    - None"""
     file = open("medicos.txt", "a")
     for x in medico:
         if not isinstance(x,list):
@@ -174,6 +182,15 @@ def guardarMedico(medico:list):
     file.close()
 
 def leerMedicos():
+    """"
+    Función que lee los médicos registrados en el archivo medicos.txt y los almacena en la lista medicos.
+    
+    Parámetros:
+    - Ninguno
+    
+    Retorna:
+    - None
+    """
     file = open("medicos.txt","r")
     medicos_file = file.read().split("\n")
     file.close()
@@ -298,6 +315,14 @@ def asignarMedico():
 
 
 def guardarPaciente(paciente):
+    """"
+    Función que guarda un paciente en el archivo pacientes.txt
+    
+    Parámetros:
+    - paciente (list): Lista que contiene la información del paciente a guardar en el archivo pacientes.txt
+    
+    Retorna:
+    - None"""
     file = open("pacientes.txt", "a")
     for x in paciente:
         file.write(f"{x}Ω")
@@ -305,6 +330,14 @@ def guardarPaciente(paciente):
     file.close()
 
 def leerPacientes():
+    """"
+    Función que lee los pacientes registrados en el archivo pacientes.txt y los almacena en la lista pacientes.
+    
+    Parámetros:
+    - Ninguno
+    
+    Retorna:
+    - None"""
     file = open("pacientes.txt","r")
     pacientes_file = file.read().split("\n")
     file.close()
@@ -532,6 +565,15 @@ def setFechaCita(cita, fecha):
     cita[1].append(fecha)
 
 def guardarCita(cita):
+    """"
+    Función que guarda una cita en el archivo citas.txt
+    
+    Parámetros:
+    - cita (list): Lista que contiene la información de la cita a guardar en el archivo citas.txt
+    
+    Retorna:
+    - None
+    """
     file = open("citas.txt", "a")
     for x in cita:
         if isinstance(x,list):
@@ -545,6 +587,15 @@ def guardarCita(cita):
     file.close()
 
 def leerCitas():
+    """"
+    Función que lee las citas registradas en el archivo citas.txt y las almacena en la lista citasAgendadas.
+    
+    Parámetros:
+    - Ninguno
+    
+    Retorna:
+    - None
+    """
     file = open("citas.txt", "r")
     citas = file.read().split("\n")
     file.close()
@@ -1286,6 +1337,15 @@ def generarReporteTratamientos():
 
 
 def crearArchivos():
+    """
+    Función que crea los archivos necesarios para almacenar la información de los pacientes, médicos y citas.
+    
+    Parámetros:
+    - Ninguno
+    
+    Retorna:
+    - None
+    """
     open("pacientes.txt", "a").close()
     open("citas.txt", "a").close()
     open("pacientes.txt", "a").close()
@@ -1319,13 +1379,10 @@ tratamientos_y_precios = [
 ]
 # * PROGRAMA PRINCIPAL ------------------------------------------------------------------------------------------------------------------------
 crearArchivos()
-
 print(presentacion)
 leerCitas()
 leerPacientes()
 leerMedicos()
-
-
 
 while True:
 

@@ -41,7 +41,7 @@ Cada medico se almacena en una lista siguiendo la estructura:
 
 | Nombre | Especialidad | Correo Electrónico | Número de Teléfono | Días de Trabajo | Horario |
 | :----: | :----------: | :----------------: | :----------------: | :-------------: | :-----: |
-| String |    String    |       String       |       String       |      List       | String  |
+| String |    String    |       String       |       String       |   List [str]    | String  |
 |   0    |      1       |         2          |         3          |        4        |    5    |
 
 > ### Ejemplo de Médico
@@ -93,10 +93,10 @@ Se almacenan en la variable `citasAgendadas`, la cual es una lista bidimensional
 
 Cada cita se almacena en una lista siguiendo la estructura:
 
-| Activo | Fechas | Paciente | Doctor | Procedimiento | Pagado | Método de Pago (opcional) |
-| :----: | :----: | :------: | :----: | :-----------: | :----: | :-----------------------: |
-|  Bool  | String |  String  | String |    String     |  Bool  |          String           |
-|   0    |   1    |    2     |   3    |       4       |   5    |             6             |
+| Activo |   Fechas   | Paciente | Doctor | Procedimiento | Pagado | Método de Pago (opcional) |
+| :----: | :--------: | :------: | :----: | :-----------: | :----: | :-----------------------: |
+|  Bool  | List [Str] |  String  | String |    String     |  Bool  |          String           |
+|   0    |     1      |    2     |   3    |       4       |   5    |             6             |
 
 > ### Ejemplo de Cita Sin Pagar
 >
@@ -113,6 +113,7 @@ Cada cita se almacena en una lista siguiendo la estructura:
 
 > ### Ejemplo de Cita Pagada
 >
+> - **Activo**: True
 > - **Fecha**: 2/1
 > - **Paciente**: Bob Smith
 > - **Doctor**: Dr. Jane Doe
@@ -121,9 +122,5 @@ Cada cita se almacena en una lista siguiendo la estructura:
 > - **Método de Pago**: Tarjeta débito/crédito
 >
 > ```python
-> ["2/1", "Bob Smith", "Dr. Jane Doe", "Limpieza dental", True, "Tarjeta débito/crédito"]
+> [True, ["2/1"], "Bob Smith", "Dr. Jane Doe", "Limpieza dental", True, "Tarjeta débito/crédito"]
 > ```
-
-### Nota
-
-Somos conscientes de que existen formas más eficientes de almacenar y manejar la información. Sin embargo, en este proyecto solo se nos permite utilizar los conocimientos que hemos adquirido en clase.
