@@ -1,2 +1,5 @@
 .DS_Store
 .vscode
+medicos.txt
+pacientes.txt
+citas.txt

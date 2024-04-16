@@ -12,21 +12,20 @@
 
 ### Estudiantes
 
--   **Jafeth Garro Roldán**
--   **Daniela Elena Gómez Mora**
--   **Aldo Mora Aguilar**
--   **Daniel Vindas Morraz**
+- **Jafeth Garro Roldán**
+- **Aldo Mora Aguilar**
+- **Daniel Vindas Morraz**
 
 ## Estructura del Proyecto
 
 Este proyecto tiene la siguiente estructura:
 
--   `.gitignore`: Este archivo se utiliza para especificar archivos o directorios que Git debe ignorar.
--   `README.md`: Este archivo proporciona información sobre el proyecto.
--   `src`: Esta carpeta contiene los archivos de código fuente del proyecto. En este caso, incluye el script de Python que ejecuta la funcionalidad principal de la aplicación.
--   `src/main.py`: Este es el script principal de Python de la aplicación.
--   `Enunciado SC-115 Proyecto Final.pdf`: Este archivo contiene el enunciado o las instrucciones para el proyecto final del curso SC-115. Incluye los requisitos, objetivos y criterios de evaluación del proyecto.
--   `Portada.pdf`: Este archivo es la portada del proyecto. Incluye detalles como el título del proyecto, los nombres de los miembros del equipo, la fecha, etc.
+- `.gitignore`: Este archivo se utiliza para especificar archivos o directorios que Git debe ignorar.
+- `README.md`: Este archivo proporciona información sobre el proyecto.
+- `src`: Esta carpeta contiene los archivos de código fuente del proyecto. En este caso, incluye el script de Python que ejecuta la funcionalidad principal de la aplicación.
+- `src/main.py`: Este es el script principal de Python de la aplicación.
+- `Enunciado SC-115 Proyecto Final.pdf`: Este archivo contiene el enunciado o las instrucciones para el proyecto final del curso SC-115. Incluye los requisitos, objetivos y criterios de evaluación del proyecto.
+- `Portada.pdf`: Este archivo es la portada del proyecto. Incluye detalles como el título del proyecto, los nombres de los miembros del equipo, la fecha, etc.
 
 ## Acerca de la Aplicación
 
@@ -47,19 +46,19 @@ Cada medico se almacena en una lista siguiendo la estructura:
 
 > ### Ejemplo de Médico
 >
-> -   **Nombre**: Dr. John Doe
-> -   **Especialidad**: Odontologo
-> -   **Correo Electrónico**: johndoe@example.com
-> -   **Número de Teléfono**: 1234567890
-> -   **Días de Trabajo**:
->     -   Lunes: Trabaja
->     -   Martes: Trabaja
->     -   Miércoles: Trabaja
->     -   Jueves: Trabaja
->     -   Viernes: Trabaja
->     -   Sábado: No Trabaja
->     -   Domingo: No Trabaja
-> -   **Horario**: Mañana
+> - **Nombre**: Dr. John Doe
+> - **Especialidad**: Odontologo
+> - **Correo Electrónico**: johndoe@example.com
+> - **Número de Teléfono**: 1234567890
+> - **Días de Trabajo**:
+>   - Lunes: Trabaja
+>   - Martes: Trabaja
+>   - Miércoles: Trabaja
+>   - Jueves: Trabaja
+>   - Viernes: Trabaja
+>   - Sábado: No Trabaja
+>   - Domingo: No Trabaja
+> - **Horario**: Mañana
 >
 > ```python
 > ["Dr. John Doe", "Odontologo","johndoe@example.com", "1234567890", ["Trabaja","Trabaja", "Trabaja", "Trabaja", "Trabaja", "No Trabaja", "No Trabaja"], 'm']
@@ -78,11 +77,11 @@ Cada paciente se almacena en una lista siguiendo la estructura:
 
 > ### Ejemplo de Paciente
 >
-> -   **Nombre**: Alice Johnson
-> -   **Correo Electrónico**: alicejohnson@example.com
-> -   **Dirección**: 123 Main St
-> -   **Número de Teléfono**: 1234567890
-> -   **Médico Asignado**: Dr. John Doe
+> - **Nombre**: Alice Johnson
+> - **Correo Electrónico**: alicejohnson@example.com
+> - **Dirección**: 123 Main St
+> - **Número de Teléfono**: 1234567890
+> - **Médico Asignado**: Dr. John Doe
 >
 > ```python
 > ["Alice Johnson", "alicejohnson@example.com", "123 Main St", "1234567890", "Dr. John Doe"]
@@ -94,34 +93,35 @@ Se almacenan en la variable `citasAgendadas`, la cual es una lista bidimensional
 
 Cada cita se almacena en una lista siguiendo la estructura:
 
-| Fecha  | Paciente | Doctor | Procedimiento | Pagado | Método de Pago (opcional) |
-| :----: | :------: | :----: | :-----------: | :----: | :-----------------------: |
-| String |  String  | String |    String     |  Bool  |          String           |
-|   0    |    1     |   2    |       3       |   4    |             5             |
+| Activo | Fechas | Paciente | Doctor | Procedimiento | Pagado | Método de Pago (opcional) |
+| :----: | :----: | :------: | :----: | :-----------: | :----: | :-----------------------: |
+|  Bool  | String |  String  | String |    String     |  Bool  |          String           |
+|   0    |   1    |    2     |   3    |       4       |   5    |             6             |
 
 > ### Ejemplo de Cita Sin Pagar
 >
-> -   **Fecha**: 1/1
-> -   **Paciente**: Alice Johnson
-> -   **Doctor**: Dr. John Doe
-> -   **Procedimiento**: Cirugía reconstructiva de mandíbula y maxilar
-> -   **Pagado**: False
+> - **Activo**: True \*Nota: Valor por defecto es siempre `True`
+> - **Fechas**: 1/1 , 1/2
+> - **Paciente**: Alice Johnson
+> - **Doctor**: Dr. John Doe
+> - **Procedimiento**: Cirugía reconstructiva de mandíbula y maxilar
+> - **Pagado**: False \*Nota: Valor por defecto es siempre `False`
 >
 > ```python
-> ["1/1", "Alice Johnson", "Dr. John Doe", "Cirugía reconstructiva de mandíbula y maxilar", False]
+> [True, ["1/1"], "Alice Johnson", "Dr. John Doe", "Cirugía reconstructiva de mandíbula y maxilar", False]
 > ```
 
 > ### Ejemplo de Cita Pagada
 >
-> -   **Fecha**: 2/1
-> -   **Paciente**: Bob Smith
-> -   **Doctor**: Dr. Jane Doe
-> -   **Procedimiento**: Limpieza dental
-> -   **Pagado**: True
-> -   **Método de Pago**: Tarjeta débito/credito
+> - **Fecha**: 2/1
+> - **Paciente**: Bob Smith
+> - **Doctor**: Dr. Jane Doe
+> - **Procedimiento**: Limpieza dental
+> - **Pagado**: True
+> - **Método de Pago**: Tarjeta débito/crédito
 >
 > ```python
-> ["2/1", "Bob Smith", "Dr. Jane Doe", "Limpieza dental", True, "Tarjeta débito/credito"]
+> ["2/1", "Bob Smith", "Dr. Jane Doe", "Limpieza dental", True, "Tarjeta débito/crédito"]
 > ```
 
 ### Nota

@@ -132,6 +132,70 @@ def mostrarMedico(medico):
     print(f"Horario: {getNombreHorario(medico[5])}\n")
 
 
+def seleccionarEspecialidadMedico():
+    """
+    Permite al usuario seleccionar una especialidad de médico de una lista de especialidades.
+
+    Returns:
+        str: La especialidad de médico seleccionada.
+    """
+    print("╭━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╮")
+    print("│      **Seleccione la especialidad del médico**      │")
+    print("├─────────────────────────────────────────────────────┤")
+    print(f"│ /// 1- Odontología General                         ")
+    print(f"│ /// 2- Ortodoncia                                  ")
+    print(f"│ /// 3- Odontopediatría                             ")
+    print(f"│ /// 4- Implantología Dental                        ")
+    print("╰━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╯")
+    
+    while True:
+        option = input("\nSeleccione una especialidad: ")
+        
+        if option == "1":
+            return "Odontología General"
+        if option == "2":
+            return "Ortodoncia"
+        if option == "3":
+            return "Odontopediatría"
+        if option == "4":
+            return "Implantología Dental"
+        else:
+            input("\n-- OPCIÓN INCORRECTA: Inténtelo de nuevo -- \nPresione enter para continuar...")
+
+def guardarMedico(medico:list):
+    file = open("medicos.txt", "a")
+    for x in medico:
+        if not isinstance(x,list):
+            file.write(f"{x}Ω")
+        else:
+            for y in x:
+                file.write(f"{y}Ω")
+    file.write("\n")
+    file.close()
+
+def leerMedicos():
+    file = open("medicos.txt","r")
+    medicos_file = file.read().split("\n")
+    file.close()
+    medicos_file.pop()
+    for x in medicos_file:
+        medico = []
+        horario = []
+        medico_preliminar = x.split("Ω")
+        medico_preliminar.pop()
+        for i in range(len(medico_preliminar)):
+            if medico_preliminar[i] == "Trabaja" or medico_preliminar[i] == "No Trabaja":
+                horario.append(medico_preliminar[i])
+
+                if len(horario) == 7:
+                    medico.append(horario)
+            else:
+                medico.append(medico_preliminar[i])
+        medicos.append(medico)
+
+
+
+
 def crearMedico():
     """
     Función que permite al usuario ingresar la información de un médico y agregarlo a la lista de médicos.
@@ -145,8 +209,10 @@ def crearMedico():
     medico = []
     print("\n\tEstimado(a) usuario ingrese la siguiente información\n")
     medico.append(input("Nombre completo del médico: "))
-    medico.append(input("Especialidad del médico: "))
-    medico.append(input("Correo electrónico del médico: "))
+    especialidad = seleccionarEspecialidadMedico()
+    medico.append(especialidad)
+    print(f"Especilidad: {especialidad}")
+    medico.append(input("\nCorreo electrónico del médico: "))
     medico.append(input("Número telefónico del médico: "))
     medico.append(crearSemanaDeTrabajo())
 
@@ -163,10 +229,12 @@ def crearMedico():
         print("\n-- OPCIÓN INCORRECTA: Inténtelo de nuevo -- ")
     medico.append(horario)
     medicos.append(medico)
-
+    guardarMedico(medico)
     print("\n\tMédico agregado exitosamente\n")
     mostrarMedico(medico)
     input("\nPresione enter para continuar...")
+
+    
 
 
 def mostrarTodosMedicos():
@@ -229,6 +297,23 @@ def asignarMedico():
     return medicos[index]
 
 
+def guardarPaciente(paciente):
+    file = open("pacientes.txt", "a")
+    for x in paciente:
+        file.write(f"{x}Ω")
+    file.write("\n")
+    file.close()
+
+def leerPacientes():
+    file = open("pacientes.txt","r")
+    pacientes_file = file.read().split("\n")
+    file.close()
+    pacientes_file.pop()
+    for x in pacientes_file:
+        paciente = x.split("Ω")
+        paciente.pop()
+        pacientes.append(paciente)
+
 def crearPaciente():
     """
     Función que crea un nuevo paciente y lo agrega a la lista de pacientes.
@@ -253,6 +338,7 @@ def crearPaciente():
     paciente.append(input("Número telefónico del paciente: "))
     paciente.append(asignarMedico()[0])
     pacientes.append(paciente)
+    guardarPaciente(paciente)
     mostrarPaciente(paciente)
     input("\nPresione enter para continuar...")
 
@@ -445,8 +531,35 @@ def getFechaCita(cita):
 def setFechaCita(cita, fecha):
     cita[1].append(fecha)
 
+def guardarCita(cita):
+    file = open("citas.txt", "a")
+    for x in cita:
+        if isinstance(x,list):
+            file.write(x[0])
+        else:
+            if x == False:
+                file.write("Ω")
+            else:
+                file.write(f"{x}Ω")
+    file.write("\n")
+    file.close()
 
-def registrarCita():
+def leerCitas():
+    file = open("citas.txt", "r")
+    citas = file.read().split("\n")
+    file.close()
+    citas.pop()
+    for x in citas:
+        cita = x.split("Ω")
+        cita.pop()
+        for i in range(len(cita)):
+            if cita[i] == "True" or cita[i] == "":
+                cita[i] = bool(cita[i])
+        cita[1] = [cita[1]]
+        citasAgendadas.append(cita)
+
+
+def crearCita():
     """
     Función que permite al usuario registrar una cita.
 
@@ -533,6 +646,7 @@ def registrarCita():
         cita.append(False)
 
         citasAgendadas.append(cita)
+        guardarCita(cita)
         print("\n\tCita registrada exitosamente\n")
         mostrarCita(cita)
         input("\nPresione enter para continuar...")
@@ -1171,6 +1285,13 @@ def generarReporteTratamientos():
     return reporte
 
 
+def crearArchivos():
+    open("pacientes.txt", "a").close()
+    open("citas.txt", "a").close()
+    open("pacientes.txt", "a").close()
+
+
+
 # * VARIABLES --------------------------------------------------------------------------------------------------------------------------------
 # 'medicos' es una lista que almacena la información de todos los médicos. Cada médico se representa como una lista de sus detalles.
 medicos = []
@@ -1196,60 +1317,15 @@ tratamientos_y_precios = [
     ["Tratamiento de lesiones faciales", 300_000],
     ["Cirugía reconstructiva de mandíbula y maxilar", 500_000]
 ]
-
-tratamientos_y_precios
-
-
-# * Datos de prueba
-
-medicos.append(
-    [
-        "Jafeth Garro",
-        "Odontologo",
-        "jafeth@garro.com",
-        "1234567890",
-        [
-            "Trabaja",
-            "Trabaja",
-            "Trabaja",
-            "Trabaja",
-            "Trabaja",
-            "No Trabaja",
-            "No Trabaja",
-        ],
-        "m",
-    ]
-)
-
-pacientes.append(
-    ["Elena Gomez", "elena@gomez.com", "123 Main St", "1234567890", "Jafeth Garro"]
-)
-
-citasAgendadas.append(
-    [
-        True,
-        ["2/1"],
-        "Elena Gomez",
-        "Jafeth Garro",
-        "Limpieza dental",
-        True,
-        "Tarjeta débito/crédito",
-    ]
-)
-
-citasAgendadas.append(
-    [
-        True,
-        ["1/1"],
-        "Alice Johnson",
-        "Dr. John Doe",
-        "Cirugía reconstructiva de mandíbula y maxilar",
-        False,
-    ]
-)
-
 # * PROGRAMA PRINCIPAL ------------------------------------------------------------------------------------------------------------------------
+crearArchivos()
+
 print(presentacion)
+leerCitas()
+leerPacientes()
+leerMedicos()
+
+
 
 while True:
 
@@ -1344,7 +1420,7 @@ while True:
 
             if menu_option == "1":
                 # Si el usuario elige registrar una cita
-                registrarCita()
+                crearCita()
 
             elif menu_option == "2":
                 # Si el usuario elige cancelar una cita
