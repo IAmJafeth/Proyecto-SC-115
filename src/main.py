@@ -171,7 +171,7 @@ def guardarMedico(medico:list):
     
     Retorna:
     - None"""
-    file = open("medicos.txt", "a")
+    file = open("medicos.txt", "a",encoding="utf-8")
     for x in medico:
         if not isinstance(x,list):
             file.write(f"{x}Ω")
@@ -323,7 +323,7 @@ def guardarPaciente(paciente):
     
     Retorna:
     - None"""
-    file = open("pacientes.txt", "a")
+    file = open("pacientes.txt", "a",encoding="utf-8")
     for x in paciente:
         file.write(f"{x}Ω")
     file.write("\n")
@@ -574,7 +574,7 @@ def guardarCita(cita):
     Retorna:
     - None
     """
-    file = open("citas.txt", "a")
+    file = open("citas.txt", "a",encoding="utf-8")
     for x in cita:
         if isinstance(x,list):
             file.write(x[0])
