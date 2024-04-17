@@ -10,7 +10,7 @@ Estudiantes:    Jafeth Garro Roldán
                 Daniel Vindas Morraz
 
 """
-
+#region Medicos
 # * FUNCIONES MEDICOS---------------------------------------------------------------------------------------------------------------------------
 
 
@@ -276,7 +276,7 @@ def mostrarTodosMedicos():
 
     input("\nPresione enter para continuar...")
 
-
+#region Pacientes
 # * FUNCIONES PACIENTES---------------------------------------------------------------------------------------------------------------------------
 
 
@@ -418,7 +418,7 @@ def mostrarTodosPacientes():
 
     input("\nPresione enter para continuar...")
 
-
+#region Citas
 # * FUNCIONES CITAS---------------------------------------------------------------------------------------------------------------------------
 
 
@@ -1009,7 +1009,7 @@ def imprimirCitas():
 
     input("Presione enter para continuar...")
 
-
+#region Pagos
 #  * FUNCIONES PAGOS---------------------------------------------------------------------------------------------------------------------------
 
 
@@ -1226,7 +1226,7 @@ def generarFactura():
     print("\n¡Factura generada exitosamente!")
     input("\nPresione enter para continuar...")
 
-
+#region Reportes
 # * FUNCIONES REPORTES------------------------------------------------------------------------------------------------------------------------
 
 
@@ -1425,7 +1425,7 @@ def crearArchivos():
     open("reportePacientes.txt", "a").close()
     open("reporteTratamientos.txt", "a").close()
 
-
+#region Variables
 # * VARIABLES --------------------------------------------------------------------------------------------------------------------------------
 # 'medicos' es una lista que almacena la información de todos los médicos. Cada médico se representa como una lista de sus detalles.
 medicos = []
@@ -1451,6 +1451,7 @@ tratamientos_y_precios = [
     ["Tratamiento de lesiones faciales", 300_000],
     ["Cirugía reconstructiva de mandíbula y maxilar", 500_000],
 ]
+#region Main
 # * PROGRAMA PRINCIPAL ------------------------------------------------------------------------------------------------------------------------
 crearArchivos()
 print(presentacion)
