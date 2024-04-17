@@ -10,7 +10,7 @@ Estudiantes:    Jafeth Garro Roldán
                 Daniel Vindas Morraz
 
 """
-#region Medicos
+# region Medicos
 # * FUNCIONES MEDICOS---------------------------------------------------------------------------------------------------------------------------
 
 
@@ -276,7 +276,8 @@ def mostrarTodosMedicos():
 
     input("\nPresione enter para continuar...")
 
-#region Pacientes
+
+# region Pacientes
 # * FUNCIONES PACIENTES---------------------------------------------------------------------------------------------------------------------------
 
 
@@ -419,7 +420,8 @@ def mostrarTodosPacientes():
 
     input("\nPresione enter para continuar...")
 
-#region Citas
+
+# region Citas
 # * FUNCIONES CITAS---------------------------------------------------------------------------------------------------------------------------
 
 
@@ -1010,7 +1012,8 @@ def imprimirCitas():
 
     input("Presione enter para continuar...")
 
-#region Pagos
+
+# region Pagos
 #  * FUNCIONES PAGOS---------------------------------------------------------------------------------------------------------------------------
 
 
@@ -1227,7 +1230,8 @@ def generarFactura():
     print("\n¡Factura generada exitosamente!")
     input("\nPresione enter para continuar...")
 
-#region Reportes
+
+# region Reportes
 # * FUNCIONES REPORTES------------------------------------------------------------------------------------------------------------------------
 
 
@@ -1309,8 +1313,8 @@ def generarReporteCitas():
     reporte = ""
     if len(citasAgendadas) == 0:
         print("No hay citas agendadas")
-        input("\nPresione enter para continuar...")
         return
+
     file = open("reporteCitas.txt", "w", encoding="utf-8")
     for i in range(len(citasAgendadas)):
         print(f"\n\tCita {i+1}")
@@ -1421,12 +1425,9 @@ def crearArchivos():
     open("medicos.txt", "a").close()
     open("citas.txt", "a").close()
     open("pacientes.txt", "a").close()
-    open("reporteMedicos.txt", "a").close()
-    open("reporteCitas.txt", "a").close()
-    open("reportePacientes.txt", "a").close()
-    open("reporteTratamientos.txt", "a").close()
 
-#region Variables
+
+# region Variables
 # * VARIABLES --------------------------------------------------------------------------------------------------------------------------------
 # 'medicos' es una lista que almacena la información de todos los médicos. Cada médico se representa como una lista de sus detalles.
 medicos = []
@@ -1452,7 +1453,7 @@ tratamientos_y_precios = [
     ["Tratamiento de lesiones faciales", 300_000],
     ["Cirugía reconstructiva de mandíbula y maxilar", 500_000],
 ]
-#region Main
+# region Main
 # * PROGRAMA PRINCIPAL ------------------------------------------------------------------------------------------------------------------------
 crearArchivos()
 print(presentacion)
