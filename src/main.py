@@ -1454,11 +1454,9 @@ tratamientos_y_precios = [
 # * PROGRAMA PRINCIPAL ------------------------------------------------------------------------------------------------------------------------
 crearArchivos()
 print(presentacion)
-# leerCitas()
+leerCitas()
 leerPacientes()
 leerMedicos()
-print(pacientes)
-print(medicos)
 
 while True:
 
