@@ -1286,7 +1286,7 @@ def mostrarCambiosDeHorarioCita(cita):
     - cita (list): Una lista que contiene la información de la cita.
 
     Retorna:
-    Ninguno
+    str: Una cadena con los cambios de horario de la cita.
     """
     reporte = ""
     if len(cita[1]) == 1:
@@ -1378,7 +1378,7 @@ def generarReporteMedicos():
     Ninguno
 
     Retorna:
-    Ninguno
+    str: El reporte de médicos registrados.
     """
 
     print("\n\tREPORTE DE MÉDICOS REGISTRADOS\n")

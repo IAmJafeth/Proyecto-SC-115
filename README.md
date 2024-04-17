@@ -125,6 +125,165 @@ Cada cita se almacena en una lista siguiendo la estructura:
 > [True, ["2/1"], "Bob Smith", "Dr. Jane Doe", "Limpieza dental", True, "Tarjeta débito/crédito"]
 > ```
 
+## Funciones de Pagos
+
+#### marcarCitaPagada(index: int, metodoPago: str)
+
+Esta función marca una cita como pagada y registra el método de pago utilizado.
+
+- **Parámetros**:
+
+  - `index` (int): El índice de la cita en la lista de citas agendadas.
+  - `metodoPago` (str): El método de pago utilizado para pagar la cita.
+
+- **Retorna**:
+  - None
+
+#### procesarPagos()
+
+Esta función procesa el pago de una cita seleccionada, mostrando las opciones de pago disponibles, calculando descuentos según el método de pago, y actualizando la información de la cita en la base de datos.
+
+- **Parámetros**:
+
+  - Ninguno
+
+- **Retorna**:
+  - None
+
+#### preciosTratamientos(tratamiento: str)
+
+Esta función devuelve el precio de un tratamiento específico.
+
+- **Parámetros**:
+
+  - `tratamiento` (str): El nombre del tratamiento.
+
+- **Retorna**:
+  - int: El precio del tratamiento.
+
+#### descuento_segun_MetodoPago(metodo: str)
+
+Esta función calcula el descuento aplicable según el método de pago.
+
+- **Parámetros**:
+
+  - `metodo` (str): El método de pago utilizado.
+
+- **Retorna**:
+  - float: El porcentaje de descuento.
+
+#### getNombreMetodoPago(metodo: int)
+
+Esta función devuelve el nombre del método de pago basado en un número de identificación del método.
+
+- **Parámetros**:
+
+  - `metodo` (int): El número que identifica el método de pago.
+
+- **Retorna**:
+  - str: El nombre del método de pago.
+
+#### calcularPrecioFinal(precioNeto: float, descuento: float)
+
+Esta función calcula el precio final de un tratamiento después de aplicar el descuento.
+
+- **Parámetros**:
+
+  - `precioNeto` (float): El precio base del tratamiento.
+  - `descuento` (float): El descuento a aplicar.
+
+- **Retorna**:
+  - float: El precio final después del descuento.
+
+#### generarFactura()
+
+Esta función genera una factura detallada para una cita pagada, incluyendo todos los detalles relevantes como el nombre del paciente, el tratamiento, el precio, los descuentos aplicados, y el total general.
+
+- **Parámetros**:
+
+  - Ninguno
+
+- **Retorna**:
+  - None
+
+## Sección de Reportes
+
+### Reportes Generales
+
+#### `mostrarReportes()`
+
+Esta función muestra un menú con opciones de reportes disponibles como citas, pacientes, médicos, y tratamientos. La función permite la selección de un reporte específico para visualización y sigue en ejecución hasta que el usuario elija regresar al menú principal.
+
+**Parámetros:**
+
+- Ninguno
+
+**Retorna:**
+
+- `None`
+
+#### `mostrarCambiosDeHorarioCita(cita: list)`
+
+Esta función muestra los cambios de horario de una cita específica. Devuelve un string que contiene todos los cambios de horario si existen, o un mensaje indicando que no hay cambios.
+
+**Parámetros:**
+
+- `cita` (list): Información de la cita, incluyendo cambios de horario.
+
+**Retorna:**
+
+- `String`: Informe de los cambios de horario o un mensaje indicativo de la ausencia de cambios.
+
+### Reportes Específicos
+
+#### `generarReporteCitas()`
+
+Genera un reporte de todas las citas agendadas, incluyendo estado de la cita, detalles relevantes y cambios de horario. Este reporte se muestra en consola y se guarda en el archivo `reporteCitas.txt`.
+
+**Parámetros:**
+
+- Ninguno
+
+**Retorna:**
+
+- `None`
+
+#### `generarReportePacientes()`
+
+Genera un reporte de los pacientes registrados, mostrando información detallada como nombre, correo, dirección, y teléfono. El reporte se muestra en pantalla y se guarda en el archivo `reportePacientes.txt`. La función espera que el usuario presione enter para continuar antes de cerrar.
+
+**Parámetros:**
+
+- Ninguno
+
+**Retorna:**
+
+- `None`
+
+#### `generarReporteMedicos()`
+
+Genera un reporte de todos los médicos registrados, mostrando información como nombre, especialidad, correo, teléfono, días y horarios de trabajo. Este reporte se visualiza en consola y se guarda en `reporteMedicos.txt`. La función también pausa para que el usuario pueda presionar enter para continuar.
+
+**Parámetros:**
+
+- Ninguno
+
+**Retorna:**
+
+- `None`
+
+#### `generarReporteTratamientos()`
+
+Genera un reporte de todos los tratamientos disponibles con sus respectivos precios, y lo guarda en el archivo `reporteTratamientos.txt`. Además, imprime el reporte en consola para su visualización inmediata.
+
+**Parámetros:**
+
+- Ninguno
+
+**Retorna:**
+
+- `String`: Contenido del reporte de tratamientos.
+
 ## Funciones para gestionar la información
 
 ### Funciones de Médicos
@@ -133,20 +292,22 @@ Cada cita se almacena en una lista siguiendo la estructura:
 
 Esta función guarda un médico en el archivo `medicos.txt`.
 
-- **Parámetros**: 
+- **Parámetros**:
+
   - `medico` (list): Lista que contiene la información del médico a guardar.
 
-- **Retorna**: 
+- **Retorna**:
   - None
 
 #### [leerMedicos()](https://github.com/IAmJafeth/Proyecto-SC-115/blob/main/src/main.py?plain=1#L188)
 
 Esta función lee los médicos registrados en el archivo `medicos.txt` y los almacena en la lista `medicos`.
 
-- **Parámetros**: 
+- **Parámetros**:
+
   - Ninguno
 
-- **Retorna**: 
+- **Retorna**:
   - None
 
 ### Funciones de Pacientes
@@ -155,20 +316,22 @@ Esta función lee los médicos registrados en el archivo `medicos.txt` y los alm
 
 Esta función guarda un paciente en el archivo `pacientes.txt`.
 
-- **Parámetros**: 
+- **Parámetros**:
+
   - `paciente` (list): Lista que contiene la información del paciente a guardar.
 
-- **Retorna**: 
+- **Retorna**:
   - None
 
 #### [leerPacientes()](https://github.com/IAmJafeth/Proyecto-SC-115/blob/main/src/main.py?plain=1#L335)
 
 Esta función lee los pacientes registrados en el archivo `pacientes.txt` y los almacena en la lista `pacientes`.
 
-- **Parámetros**: 
+- **Parámetros**:
+
   - Ninguno
 
-- **Retorna**: 
+- **Retorna**:
   - None
 
 ### Funciones de Citas
@@ -177,18 +340,20 @@ Esta función lee los pacientes registrados en el archivo `pacientes.txt` y los 
 
 Esta función guarda una cita en el archivo `citas.txt`.
 
-- **Parámetros**: 
+- **Parámetros**:
+
   - `cita` (list): Lista que contiene la información de la cita a guardar.
 
-- **Retorna**: 
+- **Retorna**:
   - None
 
 #### [leerCitas()](https://github.com/IAmJafeth/Proyecto-SC-115/blob/main/src/main.py?plain=1#L597)
 
 Esta función lee las citas registradas en el archivo `citas.txt` y las almacena en la lista `citasAgendadas`.
 
-- **Parámetros**: 
+- **Parámetros**:
+
   - Ninguno
 
-- **Retorna**: 
+- **Retorna**:
   - None
