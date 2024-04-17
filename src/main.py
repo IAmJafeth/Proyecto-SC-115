@@ -177,10 +177,10 @@ def guardarMedico(medico: list):
     file = open("medicos.txt", "a", encoding="utf-8")
     for x in medico:
         if not isinstance(x, list):
-            file.write(f"{x}Ω")
+            file.write(f"{x}~")
         else:
             for y in x:
-                file.write(f"{y}Ω")
+                file.write(f"{y}~")
     file.write("\n")
     file.close()
 
@@ -202,7 +202,7 @@ def leerMedicos():
     for x in medicos_file:
         medico = []
         horario = []
-        medico_preliminar = x.split("Ω")
+        medico_preliminar = x.split("~")
         for i in range(len(medico_preliminar)):
             if (
                 medico_preliminar[i] == "Trabaja"
@@ -327,7 +327,7 @@ def guardarPaciente(paciente):
     - None"""
     file = open("pacientes.txt", "a", encoding="utf-8")
     for x in paciente:
-        file.write(f"{x}Ω")
+        file.write(f"{x}~")
     file.write("\n")
     file.close()
 
@@ -345,7 +345,7 @@ def leerPacientes():
     pacientes_file = file.read().split("\n")
     file.close()
     for x in pacientes_file:
-        paciente = x.split("Ω")
+        paciente = x.split("~")
         paciente.pop()
         pacientes.append(paciente)
 
@@ -583,12 +583,12 @@ def guardarCita(cita):
     file = open("citas.txt", "a", encoding="utf-8")
     for x in cita:
         if isinstance(x, list):
-            file.write(f"{x[0]}Ω")
+            file.write(f"{x[0]}~")
         else:
             if x == False:
-                file.write("Ω")
+                file.write("~")
             else:
-                file.write(f"{x}Ω")
+                file.write(f"{x}~")
     file.write("\n")
     file.close()
 
@@ -608,7 +608,7 @@ def leerCitas():
     file.close()
     citas.pop()
     for x in citas:
-        cita = x.split("Ω")
+        cita = x.split("~")
         cita.pop()
         for i in range(len(cita)):
             if cita[i] == "True" or cita[i] == "":
