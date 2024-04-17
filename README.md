@@ -124,3 +124,71 @@ Cada cita se almacena en una lista siguiendo la estructura:
 > ```python
 > [True, ["2/1"], "Bob Smith", "Dr. Jane Doe", "Limpieza dental", True, "Tarjeta débito/crédito"]
 > ```
+
+## Funciones para gestionar la información
+
+### Funciones de Médicos
+
+#### [guardarMedico(medico: list)](https://github.com/IAmJafeth/Proyecto-SC-115/blob/main/src/main.py?plain=1#L168)
+
+Esta función guarda un médico en el archivo `medicos.txt`.
+
+- **Parámetros**: 
+  - `medico` (list): Lista que contiene la información del médico a guardar.
+
+- **Retorna**: 
+  - None
+
+#### [leerMedicos()](https://github.com/IAmJafeth/Proyecto-SC-115/blob/main/src/main.py?plain=1#L188)
+
+Esta función lee los médicos registrados en el archivo `medicos.txt` y los almacena en la lista `medicos`.
+
+- **Parámetros**: 
+  - Ninguno
+
+- **Retorna**: 
+  - None
+
+### Funciones de Pacientes
+
+#### [guardarPaciente(paciente: list)](https://github.com/IAmJafeth/Proyecto-SC-115/blob/main/src/main.py?plain=1#L319)
+
+Esta función guarda un paciente en el archivo `pacientes.txt`.
+
+- **Parámetros**: 
+  - `paciente` (list): Lista que contiene la información del paciente a guardar.
+
+- **Retorna**: 
+  - None
+
+#### [leerPacientes()](https://github.com/IAmJafeth/Proyecto-SC-115/blob/main/src/main.py?plain=1#L335)
+
+Esta función lee los pacientes registrados en el archivo `pacientes.txt` y los almacena en la lista `pacientes`.
+
+- **Parámetros**: 
+  - Ninguno
+
+- **Retorna**: 
+  - None
+
+### Funciones de Citas
+
+#### [guardarCita(cita: list)](https://github.com/IAmJafeth/Proyecto-SC-115/blob/main/src/main.py?plain=1#L574)
+
+Esta función guarda una cita en el archivo `citas.txt`.
+
+- **Parámetros**: 
+  - `cita` (list): Lista que contiene la información de la cita a guardar.
+
+- **Retorna**: 
+  - None
+
+#### [leerCitas()](https://github.com/IAmJafeth/Proyecto-SC-115/blob/main/src/main.py?plain=1#L597)
+
+Esta función lee las citas registradas en el archivo `citas.txt` y las almacena en la lista `citasAgendadas`.
+
+- **Parámetros**: 
+  - Ninguno
+
+- **Retorna**: 
+  - None
