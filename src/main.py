@@ -343,6 +343,7 @@ def leerPacientes():
     - None"""
     file = open("pacientes.txt", "r")
     pacientes_file = file.read().split("\n")
+    pacientes_file.pop()
     file.close()
     for x in pacientes_file:
         paciente = x.split("~")
