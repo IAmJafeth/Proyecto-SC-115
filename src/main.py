@@ -199,7 +199,6 @@ def leerMedicos():
         medico = []
         horario = []
         medico_preliminar = x.split("Ω")
-        medico_preliminar.pop()
         for i in range(len(medico_preliminar)):
             if medico_preliminar[i] == "Trabaja" or medico_preliminar[i] == "No Trabaja":
                 horario.append(medico_preliminar[i])
@@ -341,7 +340,6 @@ def leerPacientes():
     file = open("pacientes.txt","r")
     pacientes_file = file.read().split("\n")
     file.close()
-    pacientes_file.pop()
     for x in pacientes_file:
         paciente = x.split("Ω")
         paciente.pop()
@@ -1252,13 +1250,15 @@ def mostrarCambiosDeHorarioCita(cita):
     Retorna:
     Ninguno
     """
+    reporte=""
     if len(cita[1]) == 1:
-        print("No hay cambios de horario de la cita")
-        return
+        reporte="No hay cambios de horario de la cita"
+        return reporte
     
     print(f"\tCambios de horario de la cita")
     for i in range(1, len(cita[1])):
-        print(f"\t{i}. {cita[1][i]}")
+        reporte +=f"\t{i}. {cita[1][i]}"
+    return reporte
 
 def generarReporteCitas():
     """
@@ -1271,17 +1271,30 @@ def generarReporteCitas():
     Ninguno
     """
     print("\n\tREPORTE DE CITAS AGENDADAS\n")
-
+    reporte=""
     if len(citasAgendadas) == 0:
         print("No hay citas agendadas")
         input("\nPresione enter para continuar...")
         return
-
+    file = open("reporteCitas.txt", "w",encoding="utf-8")
     for i in range(len(citasAgendadas)):
         print(f"\n\tCita {i+1}")
-        print(f"Estado: {'Activada' if citasAgendadas[i][0] else 'Cancelada'}")
+        estado='Activada' if citasAgendadas[i][0] else 'Cancelada'
+        print(f"Estado: {estado}")
         mostrarCita(citasAgendadas[i])
-        mostrarCambiosDeHorarioCita(citasAgendadas[i])
+        file.write("------------------------------\n")
+        file.write(f"Fecha: {getFechaCita(citasAgendadas[i])}\n")
+        file.write(f"Paciente: {citasAgendadas[i][2]}\n")
+        file.write(f"Médico: {citasAgendadas[i][3]}\n")
+        file.write(f"Tratamiento: {citasAgendadas[i][4]}\n")
+        file.write(f"Estado de Pago: {"Pagada" if citasAgendadas[i][5] else "No Pagada"}\n")
+        if citasAgendadas[i][5]:
+            file.write(f"Método de pago: {citasAgendadas[i][6]}\n")
+        reporte=mostrarCambiosDeHorarioCita(citasAgendadas[i])
+        print(reporte)
+        file.write(f"Cambio de horarios:{reporte}\n")
+        file.write("------------------------------\n")
+    file.close()
 
 def generarReportePacientes():
     """
@@ -1300,9 +1313,17 @@ def generarReportePacientes():
         print("No hay pacientes registrados")
         input("\nPresione enter para continuar...")
         return
-    
+    file = open("reportePacientes.txt", "w",encoding="utf-8")
     for i in range(len(pacientes)):
         mostrarPaciente(pacientes[i])
+        file.write("------------------------------\n")
+        file.write(f"Nombre: {pacientes[i][0]}\n")
+        file.write(f"Correo: {pacientes[i][1]}\n")
+        file.write(f"Dirección: {pacientes[i][2]}\n")
+        file.write(f"Teléfono: {pacientes[i][3]}\n")
+        file.write(f"Médico tratante: {pacientes[i][4]}\n")
+    file.write("------------------------------\n")
+    file.close()
     
     input("\nPresione enter para continuar...")
 
@@ -1323,16 +1344,27 @@ def generarReporteMedicos():
         print("No hay médicos registrados")
         input("\nPresione enter para continuar...")
         return
-    
+    file = open("reporteMedicos.txt", "w",encoding="utf-8")
     for i in range(len(medicos)):
+        file.write("------------------------------\n")
         mostrarMedico(medicos[i])
-    
+        file.write(f"Nombre: {medicos[i][0]}\n")
+        file.write(f"Especialidad: {medicos[i][1]}\n")
+        file.write(f"Correo: {medicos[i][2]}\n")
+        file.write(f"Teléfono: {medicos[i][3]}\n")
+        file.write(f"Días de trabajo: {formatSemanaDeTrabajo(medicos[i][4])}\n")
+        file.write(f"Horario: {getNombreHorario(medicos[i][5])}\n")
+    file.write("------------------------------\n")
+    file.close()
     input("\nPresione enter para continuar...")
 
 def generarReporteTratamientos():
     reporte = "Reporte de Tratamientos Dentales:\n"
     for tratamiento, precio in tratamientos_y_precios:
         reporte += f"- {tratamiento}: {precio:,} colones\n"
+    file=open("reporteTratamientos.txt", "w",encoding="utf-8")
+    file.write(reporte)
+    file.close()
     return reporte
 
 
@@ -1349,6 +1381,10 @@ def crearArchivos():
     open("medicos.txt", "a").close()
     open("citas.txt", "a").close()
     open("pacientes.txt", "a").close()
+    open("reporteMedicos.txt","a").close()
+    open("reporteCitas.txt","a").close()
+    open("reportePacientes.txt","a").close()
+    open("reporteTratamientos.txt","a").close()
 
 
 
@@ -1380,9 +1416,11 @@ tratamientos_y_precios = [
 # * PROGRAMA PRINCIPAL ------------------------------------------------------------------------------------------------------------------------
 crearArchivos()
 print(presentacion)
-leerCitas()
+#leerCitas()
 leerPacientes()
 leerMedicos()
+print(pacientes)
+print(medicos)
 
 while True:
 
