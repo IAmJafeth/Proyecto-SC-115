@@ -450,7 +450,7 @@ def mostrarCita(cita):
     print(f"Paciente: {cita[2]}")
     print(f"Médico: {cita[3]}")
     print(f"Tratamiento: {cita[4]}")
-    print(f"Estado de Pago: {"Pagada" if cita[5] else "No Pagada"}")
+    print(f"Estado de Pago: {'Pagada' if cita[5] else 'No Pagada'}")
     if cita[5]:
         print(f"Método de pago: {cita[6]}")
     print("\n")
@@ -575,7 +575,7 @@ def guardarCita(cita):
     file = open("citas.txt", "a",encoding="utf-8")
     for x in cita:
         if isinstance(x,list):
-            file.write(x[0])
+            file.write(f"{x[0]}Ω")
         else:
             if x == False:
                 file.write("Ω")
