@@ -147,10 +147,10 @@ def seleccionarEspecialidadMedico():
     print(f"│ /// 3- Odontopediatría                             ")
     print(f"│ /// 4- Implantología Dental                        ")
     print("╰━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╯")
-    
+
     while True:
         option = input("\nSeleccione una especialidad: ")
-        
+
         if option == "1":
             return "Odontología General"
         if option == "2":
@@ -160,20 +160,23 @@ def seleccionarEspecialidadMedico():
         if option == "4":
             return "Implantología Dental"
         else:
-            input("\n-- OPCIÓN INCORRECTA: Inténtelo de nuevo -- \nPresione enter para continuar...")
+            input(
+                "\n-- OPCIÓN INCORRECTA: Inténtelo de nuevo -- \nPresione enter para continuar..."
+            )
 
-def guardarMedico(medico:list):
-    """ 
+
+def guardarMedico(medico: list):
+    """
     Función que guarda un médico en el archivo medicos.txt
-    
+
     Parámetros:
     - medico (list): Lista que contiene la información del médico a guardar en el archivo medicos.txt
-    
+
     Retorna:
     - None"""
-    file = open("medicos.txt", "a",encoding="utf-8")
+    file = open("medicos.txt", "a", encoding="utf-8")
     for x in medico:
-        if not isinstance(x,list):
+        if not isinstance(x, list):
             file.write(f"{x}Ω")
         else:
             for y in x:
@@ -181,17 +184,18 @@ def guardarMedico(medico:list):
     file.write("\n")
     file.close()
 
+
 def leerMedicos():
-    """"
+    """ "
     Función que lee los médicos registrados en el archivo medicos.txt y los almacena en la lista medicos.
-    
+
     Parámetros:
     - Ninguno
-    
+
     Retorna:
     - None
     """
-    file = open("medicos.txt","r")
+    file = open("medicos.txt", "r")
     medicos_file = file.read().split("\n")
     file.close()
     medicos_file.pop()
@@ -200,7 +204,10 @@ def leerMedicos():
         horario = []
         medico_preliminar = x.split("Ω")
         for i in range(len(medico_preliminar)):
-            if medico_preliminar[i] == "Trabaja" or medico_preliminar[i] == "No Trabaja":
+            if (
+                medico_preliminar[i] == "Trabaja"
+                or medico_preliminar[i] == "No Trabaja"
+            ):
                 horario.append(medico_preliminar[i])
 
                 if len(horario) == 7:
@@ -208,8 +215,6 @@ def leerMedicos():
             else:
                 medico.append(medico_preliminar[i])
         medicos.append(medico)
-
-
 
 
 def crearMedico():
@@ -249,8 +254,6 @@ def crearMedico():
     print("\n\tMédico agregado exitosamente\n")
     mostrarMedico(medico)
     input("\nPresione enter para continuar...")
-
-    
 
 
 def mostrarTodosMedicos():
@@ -314,36 +317,38 @@ def asignarMedico():
 
 
 def guardarPaciente(paciente):
-    """"
+    """ "
     Función que guarda un paciente en el archivo pacientes.txt
-    
+
     Parámetros:
     - paciente (list): Lista que contiene la información del paciente a guardar en el archivo pacientes.txt
-    
+
     Retorna:
     - None"""
-    file = open("pacientes.txt", "a",encoding="utf-8")
+    file = open("pacientes.txt", "a", encoding="utf-8")
     for x in paciente:
         file.write(f"{x}Ω")
     file.write("\n")
     file.close()
 
+
 def leerPacientes():
-    """"
+    """ "
     Función que lee los pacientes registrados en el archivo pacientes.txt y los almacena en la lista pacientes.
-    
+
     Parámetros:
     - Ninguno
-    
+
     Retorna:
     - None"""
-    file = open("pacientes.txt","r")
+    file = open("pacientes.txt", "r")
     pacientes_file = file.read().split("\n")
     file.close()
     for x in pacientes_file:
         paciente = x.split("Ω")
         paciente.pop()
         pacientes.append(paciente)
+
 
 def crearPaciente():
     """
@@ -556,25 +561,28 @@ def getNombreTratamiento(index):
     if index == 12:
         return "Cirugía reconstructiva de mandíbula y maxilar"
 
+
 def getFechaCita(cita):
-    return cita[1][len(cita[1])-1]
+    return cita[1][len(cita[1]) - 1]
+
 
 def setFechaCita(cita, fecha):
     cita[1].append(fecha)
 
+
 def guardarCita(cita):
-    """"
+    """ "
     Función que guarda una cita en el archivo citas.txt
-    
+
     Parámetros:
     - cita (list): Lista que contiene la información de la cita a guardar en el archivo citas.txt
-    
+
     Retorna:
     - None
     """
-    file = open("citas.txt", "a",encoding="utf-8")
+    file = open("citas.txt", "a", encoding="utf-8")
     for x in cita:
-        if isinstance(x,list):
+        if isinstance(x, list):
             file.write(f"{x[0]}Ω")
         else:
             if x == False:
@@ -584,13 +592,14 @@ def guardarCita(cita):
     file.write("\n")
     file.close()
 
+
 def leerCitas():
-    """"
+    """ "
     Función que lee las citas registradas en el archivo citas.txt y las almacena en la lista citasAgendadas.
-    
+
     Parámetros:
     - Ninguno
-    
+
     Retorna:
     - None
     """
@@ -669,7 +678,10 @@ def crearCita():
             medicosDisponibles = []
             for medico in medicos:
                 for citaAgendada in citasAgendadas:
-                    if getFechaCita(citaAgendada) == fecha and citaAgendada[2] == medico[0]:
+                    if (
+                        getFechaCita(citaAgendada) == fecha
+                        and citaAgendada[2] == medico[0]
+                    ):
                         count += 1
                         break
                 else:
@@ -756,12 +768,11 @@ def reprogramarCancelarCita():
                 indice = buscarIndiceCita(fecha, c[2], c[4])
                 break
 
-
         if encontrado == False:
             print("\nNo se ha encontrado una cita en esa fecha")
             input("\nPresione enter para continuar...")
             return
-        
+
         while True:
             print("¿Desea reagendar o cancelar la cita?\n")
             print("1. Reagendar cita")
@@ -848,6 +859,7 @@ def reprogramarCita(indice):
                 print("Ingrese una opcion valida")
                 continue
 
+
 def printCitasSinPagar():
     """
     Imprime las citas sin pagar en el siguiente formato:
@@ -860,6 +872,7 @@ def printCitasSinPagar():
         print(
             f"{i+1}- Fecha: {getFechaCita(citasSinPagar[i])} | Paciente: {citasSinPagar[i][2]} | Tratamiento: {citasSinPagar[i][4]}"
         )
+
 
 def getCitasSinPagar():
     """
@@ -891,6 +904,7 @@ def getCitasPagadas():
             citasPagadas.append(cita)
     return citasPagadas
 
+
 def getCitasActivas():
     """
     Obtiene una lista de citas agendadas que no han sido pagadas.
@@ -903,6 +917,7 @@ def getCitasActivas():
         if cita[0] == True:
             citasActivas.append(cita)
     return citasActivas
+
 
 def seleccionarCitaAPagar():
     """
@@ -937,6 +952,7 @@ def seleccionarCitaAPagar():
 
     return citasSinPagar[index]
 
+
 def buscarIndiceCita(fecha, paciente, tratamiento):
     """
     Busca el índice de una cita en la lista de citas agendadas.
@@ -952,10 +968,15 @@ def buscarIndiceCita(fecha, paciente, tratamiento):
     """
     for i in range(len(citasAgendadas)):
         cita = citasAgendadas[i]
-        if getFechaCita(cita) == fecha and cita[2] == paciente and cita[4] == tratamiento:
+        if (
+            getFechaCita(cita) == fecha
+            and cita[2] == paciente
+            and cita[4] == tratamiento
+        ):
             return i
 
     return None
+
 
 def imprimirCitas():
     """
@@ -988,8 +1009,10 @@ def imprimirCitas():
 
     input("Presione enter para continuar...")
 
+
 #  * FUNCIONES PAGOS---------------------------------------------------------------------------------------------------------------------------
-    
+
+
 def marcarCitaPagada(index, metodoPago):
     """
     Marca una cita como pagada y registra el método de pago utilizado.
@@ -1001,6 +1024,7 @@ def marcarCitaPagada(index, metodoPago):
     """
     citasAgendadas[index][5] = True
     citasAgendadas[index].append(metodoPago)
+
 
 def procesarPagos():
 
@@ -1036,7 +1060,9 @@ def procesarPagos():
     precioNeto = preciosTratamientos(tratamiento)
     precioFinal = calcularPrecioFinal(precioNeto, descuento)
 
-    marcarCitaPagada(buscarIndiceCita(getFechaCita(cita), cita[2], tratamiento), nombreMetodoPago)
+    marcarCitaPagada(
+        buscarIndiceCita(getFechaCita(cita), cita[2], tratamiento), nombreMetodoPago
+    )
     print("\nTransaccion completada con exito: \n")
     print(f"Tratamiento:\t{tratamiento}")
     print(f"Metodo de Pago:\t{nombreMetodoPago}")
@@ -1044,6 +1070,7 @@ def procesarPagos():
     print(f"Descuento:\t{descuento*100}%")
     print(f"Precio Final:\t{precioFinal}")
     input("\nPresione enter para continuar...")
+
 
 def preciosTratamientos(tratamiento):
     """
@@ -1080,6 +1107,7 @@ def preciosTratamientos(tratamiento):
     elif tratamiento == "Cirugía reconstructiva de mandíbula y maxilar":
         return 500_000
 
+
 def descuento_segun_MetodoPago(metodo):
     """
     Calcula el descuento según el método de pago seleccionado.
@@ -1096,6 +1124,7 @@ def descuento_segun_MetodoPago(metodo):
         return 0.30
     elif metodo == "Tarjeta débito/crédito":
         return 0.05
+
 
 def getNombreMetodoPago(metodo):
     """
@@ -1114,6 +1143,7 @@ def getNombreMetodoPago(metodo):
     if metodo == 3:
         return "Tarjeta débito/crédito"
 
+
 def calcularPrecioFinal(precioNeto, descuento):
     """
     Calcula el precio final de un producto aplicando un descuento al precio neto.
@@ -1126,6 +1156,7 @@ def calcularPrecioFinal(precioNeto, descuento):
     float: El precio final del producto después de aplicar el descuento.
     """
     return precioNeto - precioNeto * descuento
+
 
 def generarFactura():
     citasPagadas = getCitasPagadas()
@@ -1195,8 +1226,10 @@ def generarFactura():
     print("\n¡Factura generada exitosamente!")
     input("\nPresione enter para continuar...")
 
+
 # * FUNCIONES REPORTES------------------------------------------------------------------------------------------------------------------------
-    
+
+
 def mostrarReportes():
     """
     Muestra un menú con las opciones de reportes disponibles.
@@ -1221,7 +1254,6 @@ def mostrarReportes():
         print("│ /// 5- Regresar al menú principal                   │")
         print("╰━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╯")
 
-
         opcion = input("\nSeleccione una opción: ")
 
         if opcion == "1":
@@ -1240,6 +1272,7 @@ def mostrarReportes():
             print("Opción incorrecta, intente de nuevo")
             continue
 
+
 def mostrarCambiosDeHorarioCita(cita):
     """
     Muestra los cambios de horario de una cita.
@@ -1250,15 +1283,16 @@ def mostrarCambiosDeHorarioCita(cita):
     Retorna:
     Ninguno
     """
-    reporte=""
+    reporte = ""
     if len(cita[1]) == 1:
-        reporte="No hay cambios de horario de la cita"
+        reporte = "No hay cambios de horario de la cita"
         return reporte
-    
+
     print(f"\tCambios de horario de la cita")
     for i in range(1, len(cita[1])):
-        reporte +=f"\t{i}. {cita[1][i]}"
+        reporte += f"\t{i}. {cita[1][i]}"
     return reporte
+
 
 def generarReporteCitas():
     """
@@ -1271,15 +1305,15 @@ def generarReporteCitas():
     Ninguno
     """
     print("\n\tREPORTE DE CITAS AGENDADAS\n")
-    reporte=""
+    reporte = ""
     if len(citasAgendadas) == 0:
         print("No hay citas agendadas")
         input("\nPresione enter para continuar...")
         return
-    file = open("reporteCitas.txt", "w",encoding="utf-8")
+    file = open("reporteCitas.txt", "w", encoding="utf-8")
     for i in range(len(citasAgendadas)):
         print(f"\n\tCita {i+1}")
-        estado='Activada' if citasAgendadas[i][0] else 'Cancelada'
+        estado = "Activada" if citasAgendadas[i][0] else "Cancelada"
         print(f"Estado: {estado}")
         mostrarCita(citasAgendadas[i])
         file.write("------------------------------\n")
@@ -1287,14 +1321,17 @@ def generarReporteCitas():
         file.write(f"Paciente: {citasAgendadas[i][2]}\n")
         file.write(f"Médico: {citasAgendadas[i][3]}\n")
         file.write(f"Tratamiento: {citasAgendadas[i][4]}\n")
-        file.write(f"Estado de Pago: {"Pagada" if citasAgendadas[i][5] else "No Pagada"}\n")
+        file.write(
+            f"Estado de Pago: {'Pagada' if citasAgendadas[i][5] else 'No Pagada'}\n"
+        )
         if citasAgendadas[i][5]:
             file.write(f"Método de pago: {citasAgendadas[i][6]}\n")
-        reporte=mostrarCambiosDeHorarioCita(citasAgendadas[i])
+        reporte = mostrarCambiosDeHorarioCita(citasAgendadas[i])
         print(reporte)
         file.write(f"Cambio de horarios:{reporte}\n")
         file.write("------------------------------\n")
     file.close()
+
 
 def generarReportePacientes():
     """
@@ -1313,7 +1350,7 @@ def generarReportePacientes():
         print("No hay pacientes registrados")
         input("\nPresione enter para continuar...")
         return
-    file = open("reportePacientes.txt", "w",encoding="utf-8")
+    file = open("reportePacientes.txt", "w", encoding="utf-8")
     for i in range(len(pacientes)):
         mostrarPaciente(pacientes[i])
         file.write("------------------------------\n")
@@ -1324,8 +1361,9 @@ def generarReportePacientes():
         file.write(f"Médico tratante: {pacientes[i][4]}\n")
     file.write("------------------------------\n")
     file.close()
-    
+
     input("\nPresione enter para continuar...")
+
 
 def generarReporteMedicos():
     """
@@ -1344,7 +1382,7 @@ def generarReporteMedicos():
         print("No hay médicos registrados")
         input("\nPresione enter para continuar...")
         return
-    file = open("reporteMedicos.txt", "w",encoding="utf-8")
+    file = open("reporteMedicos.txt", "w", encoding="utf-8")
     for i in range(len(medicos)):
         file.write("------------------------------\n")
         mostrarMedico(medicos[i])
@@ -1358,11 +1396,12 @@ def generarReporteMedicos():
     file.close()
     input("\nPresione enter para continuar...")
 
+
 def generarReporteTratamientos():
     reporte = "Reporte de Tratamientos Dentales:\n"
     for tratamiento, precio in tratamientos_y_precios:
         reporte += f"- {tratamiento}: {precio:,} colones\n"
-    file=open("reporteTratamientos.txt", "w",encoding="utf-8")
+    file = open("reporteTratamientos.txt", "w", encoding="utf-8")
     file.write(reporte)
     file.close()
     return reporte
@@ -1371,21 +1410,20 @@ def generarReporteTratamientos():
 def crearArchivos():
     """
     Función que crea los archivos necesarios para almacenar la información de los pacientes, médicos y citas.
-    
+
     Parámetros:
     - Ninguno
-    
+
     Retorna:
     - None
     """
     open("medicos.txt", "a").close()
     open("citas.txt", "a").close()
     open("pacientes.txt", "a").close()
-    open("reporteMedicos.txt","a").close()
-    open("reporteCitas.txt","a").close()
-    open("reportePacientes.txt","a").close()
-    open("reporteTratamientos.txt","a").close()
-
+    open("reporteMedicos.txt", "a").close()
+    open("reporteCitas.txt", "a").close()
+    open("reportePacientes.txt", "a").close()
+    open("reporteTratamientos.txt", "a").close()
 
 
 # * VARIABLES --------------------------------------------------------------------------------------------------------------------------------
@@ -1411,12 +1449,12 @@ tratamientos_y_precios = [
     ["Tratamiento de gingivitis", 35_000],
     ["Colocación de retenedores", 60_000],
     ["Tratamiento de lesiones faciales", 300_000],
-    ["Cirugía reconstructiva de mandíbula y maxilar", 500_000]
+    ["Cirugía reconstructiva de mandíbula y maxilar", 500_000],
 ]
 # * PROGRAMA PRINCIPAL ------------------------------------------------------------------------------------------------------------------------
 crearArchivos()
 print(presentacion)
-#leerCitas()
+# leerCitas()
 leerPacientes()
 leerMedicos()
 print(pacientes)
