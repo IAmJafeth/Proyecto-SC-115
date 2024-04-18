@@ -1164,6 +1164,10 @@ def calcularPrecioFinal(precioNeto, descuento):
 
 def generarFactura():
     citasPagadas = getCitasPagadas()
+    if len(citasPagadas) == 0:
+        print("\n\tNo hay citas pagadas\n")
+        input("\nPresione enter para continuar...")
+        return
     print("\nSeleccione una cita para generar la factura:\n")
     i = 1
     while i <= len(citasPagadas):
