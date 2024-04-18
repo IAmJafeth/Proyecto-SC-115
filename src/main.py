@@ -1294,8 +1294,8 @@ def mostrarCambiosDeHorarioCita(cita):
         return reporte
 
     print(f"\tCambios de horario de la cita")
-    for i in range(1, len(cita[1])):
-        reporte += f"\t{i}. {cita[1][i]}"
+    for i in range(0, len(cita[1]) - 1):
+        reporte += f"\t{i+1}. {cita[1][i]}"
     return reporte
 
 
