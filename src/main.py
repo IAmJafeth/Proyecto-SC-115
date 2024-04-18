@@ -1544,7 +1544,7 @@ while True:
             print("│Opciones:                                            │")
             print("├─────────────────────────────────────────────────────┤")
             print("│ /// 1- Registrar cita                               │")
-            print("│ /// 2- Cancelar cita                                │")
+            print("│ /// 2- Cancelar o reprogramar cita                  │")
             print("│ /// 3- Ver citas agendadas                          │")
             print("├─────────────────────────────────────────────────────┤")
             print("│ /// 4- Regresar al MENÚ PRINCIPAL                   │")
